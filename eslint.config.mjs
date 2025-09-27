@@ -6,6 +6,7 @@ import tsEslintPlugin from '@typescript-eslint/eslint-plugin';
 import vuePlugin from 'eslint-plugin-vue';
 import prettierPlugin from 'eslint-plugin-prettier';
 import vueParser from 'vue-eslint-parser';
+import prettierConfig from 'eslint-config-prettier';
 
 // 直接定义 ESLint 配置
 const config = [
@@ -87,6 +88,8 @@ const config = [
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
     },
   },
+  // 添加eslint-config-prettier配置来禁用可能与Prettier冲突的ESLint规则
+  prettierConfig,
 ];
 
 export default config;

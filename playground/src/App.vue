@@ -94,7 +94,9 @@
   const resetCounter = (): void => {
     if (helloWorldRef.value) {
       if ('resetCount' in helloWorldRef.value) {
-        (helloWorldRef.value as any).resetCount();
+        // 使用类型守卫而非any
+        const refWithReset = helloWorldRef.value as { resetCount: () => void };
+        refWithReset.resetCount();
       }
       addLog('计数已重置');
     }

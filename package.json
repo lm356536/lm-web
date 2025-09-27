@@ -27,7 +27,7 @@
     "ant-design-vue": "*",
     "cross-env": "*",
     "eslint": "*",
-    "eslint-config-prettier": "*",
+    "eslint-config-prettier": "^9.1.2",
     "eslint-plugin-prettier": "*",
     "eslint-plugin-vue": "*",
     "prettier": "*",
