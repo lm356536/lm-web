@@ -1,8 +1,8 @@
 {
   "folders": [
     {
-      "name": "@lm/web-antd",
-      "path": "apps/web-antd",
+      "name": "@lm/lm-antd-admin",
+      "path": "apps/lm-antd-admin",
     },
     {
       "name": "@lm/web",

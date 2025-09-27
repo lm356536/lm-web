@@ -38,7 +38,7 @@
   // 项目结构说明
   const projectStructure = ref(`
   ├── apps/
-  │   └── web-antd/         # 基于 Ant Design 的 Web 应用
+  │   └── lm-antd-admin/         # 基于 Ant Design 的 Web 应用
   ├── packages/
   │   ├── components/       # 共享组件库
   │   ├── utils/            # 工具函数库

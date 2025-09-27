@@ -20,7 +20,7 @@
 
 ```
 ├── apps/             # 业务应用目录
-│   ├── web-antd/     # 基于 Ant Design Vue 的应用
+│   ├── lm-antd-admin/     # 基于 Ant Design Vue 的应用
 │   ├── web-ele/      # 基于 Element Plus 的应用
 │   ├── web-naive/    # 基于 Naive UI 的应用
 │   └── backend-mock/ # 后端模拟服务
@@ -131,7 +131,7 @@ export default defineConfig();
 - 定义了清晰的导出路径，包括类型定义
 - 设置为 ES 模块格式
 
-### 4.2 应用包示例 (apps/web-antd)
+### 4.2 应用包示例 (apps/lm-antd-admin)
 
 业务应用采用标准的 Vite + Vue + TypeScript 结构：
 

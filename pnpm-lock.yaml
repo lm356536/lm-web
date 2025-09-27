@@ -86,7 +86,7 @@ importers:
         specifier: '*'
         version: 1.8.27(typescript@5.9.2)
 
-  apps/web-antd:
+  apps/lm-antd-admin:
     dependencies:
       '@ant-design/icons-vue':
         specifier: ^7.0.1

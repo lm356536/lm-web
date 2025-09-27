@@ -6,14 +6,14 @@
 
 - 基于 Vue 3、TypeScript、Vite 创建 Monorepo 架构
 - 配置 pnpm-workspace.yaml 实现多包管理
-- 建立 apps/web-antd 和 playground 子包
+- 建立 apps/lm-antd-admin 和 playground 子包
 - 创建 packages 目录，包含 components、utils 等共享库
 - 实现 internal 目录存放项目内部配置工具
 
 ### 核心配置文件
 
 - 创建根目录 tsconfig.json 实现统一 TypeScript 配置
-- 为 apps/web-antd 添加 tsconfig.json 配置，支持路径别名和复合编译
+- 为 apps/lm-antd-admin 添加 tsconfig.json 配置，支持路径别名和复合编译
 - 实现 scripts/clean/index.js 清理脚本，支持多包清理
 - 在根目录 package.json 添加 clean 命令
 - 创建根目录 README.md 文档

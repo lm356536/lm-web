@@ -1,5 +1,5 @@
 {
-  "name": "@lm/web-antd",
+  "name": "@lm/lm-antd-admin",
   "private": true,
   "type": "module",
   "scripts": {

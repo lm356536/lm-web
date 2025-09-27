@@ -6,7 +6,7 @@
 
 ```
 ├── apps/                    # 应用目录
-│   └── web-antd/           # 基于 Ant Design Vue 的管理系统
+│   └── lm-antd-admin/           # 基于 Ant Design Vue 的管理系统
 ├── packages/               # 共享包目录
 │   ├── components/         # 共享组件库
 │   ├── utils/              # 工具函数库
@@ -38,7 +38,7 @@ pnpm install
 # 启动所有应用
 pnpm dev
 
-# 仅启动 web-antd 应用
+# 仅启动 lm-antd-admin 应用
 pnpm dev:web
 
 # 仅启动 playground 应用
@@ -51,7 +51,7 @@ pnpm dev:play
 # 构建所有项目
 pnpm build
 
-# 仅构建 web-antd 应用
+# 仅构建 lm-antd-admin 应用
 pnpm build:web
 ```
 

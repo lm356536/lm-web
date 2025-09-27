@@ -9,7 +9,7 @@
 ```
 lm-web/
 ├── apps/                     # 业务应用目录
-│   └── web-antd/             # Ant Design Vue业务应用
+│   └── lm-antd-admin/             # Ant Design Vue业务应用
 │       ├── index.html
 │       ├── package.json
 │       ├── public/
@@ -91,7 +91,7 @@ packages:
   "include": ["**/*.ts", "**/*.d.ts", "**/*.tsx", "**/*.vue"],
   "references": [
     { "path": "./tsconfig.node.json" },
-    { "path": "./apps/web-antd/tsconfig.json" },
+    { "path": "./apps/lm-antd-admin/tsconfig.json" },
     { "path": "./packages/components/tsconfig.json" },
     { "path": "./packages/utils/tsconfig.json" },
     { "path": "./packages/types/tsconfig.json" }
@@ -109,12 +109,12 @@ packages:
   "scripts": {
     "build": "pnpm run build:packages && pnpm run build:web",
     "build:packages": "pnpm -F @lm/types -F @lm/utils -F @lm/components run build",
-    "build:web": "pnpm -F @lm/web-antd run build",
+    "build:web": "pnpm -F @lm/lm-antd-admin run build",
     "check:type": "pnpm run check:type:packages && pnpm run check:type:web",
     "check:type:packages": "pnpm -F @lm/types -F @lm/utils -F @lm/components run type-check",
     "dev": "pnpm run dev:packages && pnpm run dev:web",
     "dev:packages": "pnpm -F @lm/components run dev",
-    "dev:web": "pnpm -F @lm/web-antd run dev"
+    "dev:web": "pnpm -F @lm/lm-antd-admin run dev"
   }
 }
 ```
@@ -258,7 +258,7 @@ export default defineConfig({
 
 ```bash
 # 构建特定业务应用
-pnpm -F @lm/web-antd run build
+pnpm -F @lm/lm-antd-admin run build
 
 # 或使用根目录脚本
 pnpm run build:web
@@ -266,7 +266,7 @@ pnpm run build:web
 
 ### 2. 业务应用优化配置
 
-**apps/web-antd/vite.config.ts**
+**apps/lm-antd-admin/vite.config.ts**
 
 ```typescript
 import { defineConfig } from 'vite'

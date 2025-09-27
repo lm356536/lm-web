@@ -4,13 +4,7 @@ import router from './router';
 // Ant Design Vue v4 重置样式
 import 'ant-design-vue/dist/reset.css';
 // 全局部分注册 ant-design-vue 组件
-import { 
-  Button, 
-  message, 
-  Layout, 
-  Menu, 
-  Dropdown 
-} from 'ant-design-vue';
+import { Button, message, Layout, Menu, Dropdown } from 'ant-design-vue';
 
 // 创建Vue应用实例
 const app = createApp(App);
