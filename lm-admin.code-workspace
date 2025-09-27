@@ -7,7 +7,7 @@
     {
       "name": "@lm/web",
       "path": "apps/web",
-    }, 
+    },
     {
       "name": "@lm/playground",
       "path": "playground",
@@ -27,6 +27,6 @@
     {
       "name": "@lm/eslint-config",
       "path": "internal/eslint-config",
-    }
+    },
   ],
 }

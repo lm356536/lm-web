@@ -125,6 +125,7 @@ export default defineConfig();
 ```
 
 关键特点：
+
 - 使用 `workspace:*` 引用工作区内的其他包
 - 使用 `catalog:` 引用已在 pnpm-workspace.yaml 中声明版本的依赖
 - 定义了清晰的导出路径，包括类型定义

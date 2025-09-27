@@ -15,10 +15,10 @@
     }
   },
   "scripts": {
-      "build": "vite build && tsc -d --emitDeclarationOnly",
-      "dev": "vite build --watch",
-      "type-check": "tsc --noEmit"
-    },
+    "build": "vite build && tsc -d --emitDeclarationOnly",
+    "dev": "vite build --watch",
+    "type-check": "tsc --noEmit"
+  },
   "dependencies": {
     "@lm/types": "workspace:*",
     "@lm/utils": "workspace:*",
