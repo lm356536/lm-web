@@ -1,9 +1,7 @@
-import type { ESLint } from 'eslint';
-
 /**
  * 共享的ESLint配置
  */
-export function defineConfig(): ESLint.Config[] {
+export function defineConfig(): Array<Record<string, any>> {
   return [
     {
       ignores: ['**/node_modules/**', '**/dist/**', '**/coverage/**', '**/.git/**', '**/pnpm-lock.yaml'],

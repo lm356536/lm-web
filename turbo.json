@@ -1,5 +1,0 @@
-{
-  "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["pnpm-lock.yaml"],
-  "globalEnv": ["NODE_ENV"]
-}

@@ -1,17 +1,12 @@
-import { dirname } from 'node:path';
-
-import {
-  getPackages as getPackagesFunc,
-  getPackagesSync as getPackagesSyncFunc,
-} from '@manypkg/get-packages';
-import { findUpSync } from 'find-up';
+import { dirname } from 'path';
+import findUp from 'find-up';
 
 /**
  * 查找大仓的根目录
  * @param cwd
  */
-function findMonorepoRoot(cwd: string = process.cwd()) {
-  const lockFile = findUpSync('pnpm-lock.yaml', {
+async function findMonorepoRoot(cwd: string = process.cwd()) {
+  const lockFile = await findUp('pnpm-lock.yaml', {
     cwd,
     type: 'file',
   });
@@ -21,17 +16,9 @@ function findMonorepoRoot(cwd: string = process.cwd()) {
 /**
  * 获取大仓的所有包
  */
-function getPackagesSync() {
-  const root = findMonorepoRoot();
-  return getPackagesSyncFunc(root);
-}
-
-/**
- * 获取大仓的所有包
- */
 async function getPackages() {
-  const root = findMonorepoRoot();
-
+  const root = await findMonorepoRoot();
+  const { getPackages: getPackagesFunc } = await import('@manypkg/get-packages');
   return await getPackagesFunc(root);
 }
 
@@ -43,4 +30,4 @@ async function getPackage(pkgName: string) {
   return packages.find((pkg) => pkg.packageJson.name === pkgName);
 }
 
-export { findMonorepoRoot, getPackage, getPackages, getPackagesSync };
+export { findMonorepoRoot, getPackage, getPackages };
