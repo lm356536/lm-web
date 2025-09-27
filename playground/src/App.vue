@@ -93,7 +93,9 @@
   // 重置计数
   const resetCounter = (): void => {
     if (helloWorldRef.value) {
-      helloWorldRef.value.resetCount();
+      if ('resetCount' in helloWorldRef.value) {
+        (helloWorldRef.value as any).resetCount();
+      }
       addLog('计数已重置');
     }
   };

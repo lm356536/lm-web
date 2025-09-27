@@ -80,9 +80,7 @@
     InfoCircleOutlined,
     UserOutlined,
   } from '@ant-design/icons-vue';
-  // Ant Design Vue v4 重置样式
-  import 'ant-design-vue/dist/reset.css';
-
+ 
   // 按需引入共享组件库中的组件 - 支持tree shaking
   import { HelloWorld } from '@lm/components';
 

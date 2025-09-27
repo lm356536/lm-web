@@ -5,7 +5,7 @@ import { createBaseConfig, createServerConfig } from '@lm/vite-config';
 // https://vitejs.dev/config/
 export default defineConfig({
   ...createBaseConfig(),
-  ...createServerConfig(3001), // 使用3001端口避免与其他应用冲突
+  ...createServerConfig(8081), // 使用8081端口避免与主应用冲突
   plugins: [vue()],
   resolve: {
     alias: {

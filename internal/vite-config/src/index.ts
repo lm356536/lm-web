@@ -33,10 +33,12 @@ export const createBaseConfig = (): UserConfig => ({
 /**
  * 开发服务器配置
  */
-export const createServerConfig = (port = 3000) => ({
+export const createServerConfig = (port = 8080) => ({
   server: {
     port,
-    open: true,
+    strictPort: false, // 端口被占用时自动尝试下一个可用端口
+    host: true, // 显示Network地址
+    open: true, // 自动打开默认浏览器
     cors: true,
     fs: {
       strict: true,
