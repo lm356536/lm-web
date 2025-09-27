@@ -41,5 +41,8 @@
     "vue-eslint-parser": "catalog:",
     "vue-router": "*",
     "vue-tsc": "*"
+  },
+  "volta": {
+    "node": "23.11.0"
   }
 }

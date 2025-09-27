@@ -52,3 +52,4 @@ vite.config.ts.*
 .cursor
 
 project-documentation.md
+node_modules
