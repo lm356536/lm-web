@@ -11,14 +11,14 @@ export default defineConfig({
       insertTypesEntry: true,
       cleanVueFileName: true,
       copyDtsFiles: true,
-      include: ['src/index.ts', 'src/components/**/*.vue'],
+      include: ['src/index.ts', 'src/HelloWorld/**/*.vue'],
     }),
   ],
   build: {
     lib: {
       entry: {
         index: resolve(__dirname, 'src/index.ts'),
-        'components/HelloWorld': resolve(__dirname, 'src/components/HelloWorld.vue'),
+        'HelloWorld/HelloWorld': resolve(__dirname, 'src/HelloWorld/HelloWorld.vue'),
       },
       name: '@lm/components',
       formats: ['es'],
