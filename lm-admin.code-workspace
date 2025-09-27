@@ -1,0 +1,32 @@
+{
+  "folders": [
+    {
+      "name": "@lm/web-antd",
+      "path": "apps/web-antd",
+    },
+    {
+      "name": "@lm/web",
+      "path": "apps/web",
+    }, 
+    {
+      "name": "@lm/playground",
+      "path": "playground",
+    },
+    {
+      "name": "@lm/components",
+      "path": "packages/components",
+    },
+    {
+      "name": "@lm/utils",
+      "path": "packages/utils",
+    },
+    {
+      "name": "@lm/prettier-config",
+      "path": "internal/prettier-config",
+    },
+    {
+      "name": "@lm/eslint-config",
+      "path": "internal/eslint-config",
+    }
+  ],
+}

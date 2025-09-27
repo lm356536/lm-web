@@ -1,0 +1,40 @@
+{
+  "name": "lm-web-monorepo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 turbo build",
+    "build:web": "pnpm run build --filter=@lm/web-antd",
+    "check": "pnpm run check:type",
+    "check:type": "tsc --noEmit --skipLibCheck",
+    "clean": "node ./scripts/clean/index.js",
+    "dev": "turbo run dev",
+    "dev:web": "pnpm -F @lm/web-antd run dev",
+    "dev:play": "pnpm -F @lm/playground run dev",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "format": "prettier . --write --ignore-path .gitignore"
+  },
+  "devDependencies": {
+    "@types/node": "*",
+    "@typescript-eslint/eslint-plugin": "*",
+    "@typescript-eslint/parser": "*",
+    "@vitejs/plugin-vue": "*",
+    "@vitejs/plugin-vue-jsx": "catalog:",
+    "ant-design-vue": "*",
+    "cross-env": "*",
+    "eslint": "*",
+    "eslint-config-prettier": "*",
+    "eslint-plugin-prettier": "*",
+    "eslint-plugin-vue": "*",
+    "prettier": "*",
+    "terser": "*",
+    "turbo": "^1.12.5",
+    "typescript": "*",
+    "unbuild": "catalog:",
+    "vite": "*",
+    "vitest": "catalog:",
+    "vue": "*",
+    "vue-router": "*",
+    "vue-tsc": "*"
+  }
+}

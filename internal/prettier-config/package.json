@@ -1,0 +1,10 @@
+{
+  "name": "@lm/prettier-config",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.js"
+    }
+  }
+}
