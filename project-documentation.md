@@ -252,101 +252,142 @@ export default defineConfig({
 }
 ```
 
-## 六、开发与构建流程
+## 八、构建配置
 
-### 安装依赖
-
-```bash
-# 安装所有项目依赖
-pnpm install
-```
-
-### 开发模式
+### 1. 构建命令
 
 ```bash
-# 启动特定业务应用（推荐开发时使用）
-pnpm run dev:web
-
-# 启动所有相关服务（组件库watch + 业务应用）
-pnpm run dev
-```
-
-### 构建项目
-
-```bash
-# 构建所有共享包
-pnpm run build:packages
-
 # 构建特定业务应用
+pnpm -F @lm/web-antd run build
+
+# 或使用根目录脚本
 pnpm run build:web
-
-# 构建整个项目（共享包 + 业务应用）
-pnpm run build
 ```
 
-### 类型检查
+### 2. 业务应用优化配置
 
-```bash
-# 检查所有共享包类型
-pnpm run check:type:packages
-
-# 检查整个项目类型
-pnpm run check:type
-```
-
-## 七、子包间依赖引用示例
-
-### 1. 在组件库中引用工具库
+**apps/web-antd/vite.config.ts**
 
 ```typescript
-// packages/components/src/HelloWorld.vue
-<script setup lang="ts">
-import { formatDate } from '@lm/utils'
-import type { UserInfo } from '@lm/types'
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { resolve } from 'path'
 
-// 使用示例
-const formattedDate = formatDate(new Date())
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src')
+    }
+  },
+  build: {
+    // 避免过大chunk警告
+    chunkSizeWarningLimit: 2000,
+    // 仅保留vue相关依赖的代码分割
+    manualChunks: {
+      'vue-vendor': ['vue', 'vue-router']
+    }
+  },
+  server: {
+    port: 3001
+  }
+})
+```
+
+## 九、Ant Design Vue 按需引入指南
+
+### 1. 组件按需引入方法
+
+在组件中按需引入 Ant Design Vue 组件和图标：
+
+```vue
+<script setup lang="ts">
+// 按需引入组件
+import { Card, Tag, Button } from 'ant-design-vue'
+import { HomeOutlined, UserOutlined } from '@ant-design/icons-vue'
+// 引入重置样式
+import 'ant-design-vue/dist/reset.css'
 </script>
 ```
 
-### 2. 在业务应用中引用组件库
+### 2. 图标使用规范
 
-```typescript
-// apps/web-antd/src/App.vue
-<script setup lang="ts">
-import { HelloWorld } from '@lm/components'
-</script>
+Ant Design Vue v4 中图标组件使用短横线格式：
 
+```vue
 <template>
-  <HelloWorld />
+  <div>
+    <home-outlined />
+    <user-outlined />
+  </div>
 </template>
 ```
 
-## 八、注意事项
+### 3. Vite 配置简化
 
-### 1. 依赖管理规范
-- 所有子包间依赖必须使用 `workspace:*` 协议引用
-- 不要在子包间直接引用 `node_modules` 中的依赖
-- 类型定义文件必须放在 `dist` 目录下，确保构建时正确引用
+按需引入后，Vite 配置可以简化：
 
-### 2. 避免循环依赖
-- 遵循单向依赖流：types → utils → components → apps
-- 类型定义库（@lm/types）不应依赖其他任何包
-- 工具库（@lm/utils）只可依赖类型定义库
-- 组件库可依赖工具库和类型定义库
-- 业务应用可依赖所有共享包
+```typescript
+build: {
+  // 避免过大chunk警告
+  chunkSizeWarningLimit: 2000,
+  // 仅保留vue相关依赖的代码分割
+  manualChunks: {
+    'vue-vendor': ['vue', 'vue-router']
+  }
+}
+```
 
-### 3. 开发环境注意事项
-- 修改共享包代码后，需要重新构建才能在业务应用中生效
-- 使用 `pnpm run dev:packages` 启动组件库的watch模式，实现代码热更新
-- 确保类型定义文件正确导出，便于IDE提供类型提示
+### 4. 按需引入优势
 
-## 九、项目优化建议
+- **减小打包体积**：只引入使用的组件，减小最终构建文件大小
+- **优化加载性能**：减少不必要的代码加载
+- **避免全量样式冲突**：降低全局样式冲突风险
 
-1. **添加自动化测试**：为共享组件和工具函数添加单元测试
-2. **实现CI/CD流程**：配置自动化构建、测试和部署流程
-3. **添加文档系统**：为组件库和工具库添加使用文档
-4. **实现版本发布工具**：支持批量发布和语义化版本管理
-5. **添加代码覆盖率报告**：确保代码质量
+### 5. 注意事项
 
-通过以上架构设计和实现，我们成功构建了一个灵活、高效的Monorepo前端项目集合，支持代码复用、统一规范和高效依赖管理，为团队协作开发提供了良好的基础。
+- Ant Design Vue v4 使用 `reset.css` 作为基础样式，不再有 `antd.css`
+- 确保在使用组件前正确引入组件和必要的样式
+- 图标组件需要从 `@ant-design/icons-vue` 单独引入
+
+## 十、项目优化建议
+
+1. **添加自动化测试**：使用 Vitest + Vue Test Utils 为组件和工具函数添加单元测试
+
+2. **避免循环依赖**：确保子包间不会形成循环引用，影响构建和运行
+
+3. **类型定义文件位置**：将类型定义文件放在 `dist` 目录下，确保在构建时被正确引用
+
+4. **依赖版本一致性**：使用 pnpm 的 workspace 特性确保依赖版本一致
+
+5. **性能优化**：
+   - 组件懒加载
+   - 图片优化
+   - 路由预加载
+
+6. **代码规范**：
+   - 使用 ESLint + Prettier 确保代码风格一致
+   - 配置 TypeScript 严格模式
+
+7. **文档维护**：
+   - 为组件和工具函数添加 JSDoc 注释
+   - 维护更新项目文档
+
+8. **测试覆盖**：
+   - 增加单元测试覆盖率
+   - 添加 E2E 测试
+
+9. **持续集成**：
+   - 配置 GitHub Actions 或其他 CI 工具
+   - 自动化测试和构建
+
+10. **发布策略**：
+    - 制定语义化版本管理规范
+    - 配置自动化发布脚本
+
+11. **实现CI/CD流程**：建立自动化的代码集成和部署流程，提高开发效率
+
+12. **添加文档系统**：使用 VitePress 或 Storybook 为组件库添加文档和演示
+
+通过以上配置和最佳实践，我们成功实现了一个基于 Vue 3、TypeScript 和 Vite 的多包（Monorepo）前端项目，实现了子项目间的代码复用、统一管理和高效开发。

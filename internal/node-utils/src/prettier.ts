@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 
-import { format, getFileInfo, resolveConfig } from 'prettier';
+import { format, getFileInfo, resolveConfig, Options } from 'prettier';
 
 async function prettierFormat(filepath: string) {
   const prettierOptions = await resolveConfig(filepath, {});
@@ -10,7 +10,7 @@ async function prettierFormat(filepath: string) {
   const input = await fs.readFile(filepath, 'utf8');
   const output = await format(input, {
     ...prettierOptions,
-    parser: fileInfo.inferredParser as any,
+    parser: fileInfo.inferredParser as Options['parser'],
   });
   if (output !== input) {
     await fs.writeFile(filepath, output, 'utf8');

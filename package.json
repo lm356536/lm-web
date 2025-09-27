@@ -14,7 +14,7 @@
     "dev:packages": "pnpm -F @lm/components run dev",
     "dev:web": "pnpm -F @lm/web-antd run dev",
     "dev:play": "pnpm -F @lm/playground run dev",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "lint": "eslint . --fix --max-warnings 0",
     "format": "prettier . --write --ignore-path .gitignore",
     "prepare": "pnpm run build:packages"
   },
@@ -39,6 +39,7 @@
     "vite-plugin-dts": "^3.0.0",
     "vitest": "*",
     "vue": "*",
+    "vue-eslint-parser": "catalog:",
     "vue-router": "*",
     "vue-tsc": "*"
   }

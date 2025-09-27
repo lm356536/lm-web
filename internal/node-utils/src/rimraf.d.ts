@@ -7,6 +7,6 @@ declare module 'rimraf' {
       glob?: boolean;
       disableGlob?: boolean;
       preserveRoot?: boolean;
-    }
+    },
   ): Promise<void>;
 }

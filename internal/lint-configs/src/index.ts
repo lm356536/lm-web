@@ -1,10 +1,16 @@
 /**
  * 共享的ESLint配置
  */
-export function defineConfig(): Array<Record<string, any>> {
+export function defineConfig(): Array<Record<string, unknown>> {
   return [
     {
-      ignores: ['**/node_modules/**', '**/dist/**', '**/coverage/**', '**/.git/**', '**/pnpm-lock.yaml'],
+      ignores: [
+        '**/node_modules/**',
+        '**/dist/**',
+        '**/coverage/**',
+        '**/.git/**',
+        '**/pnpm-lock.yaml',
+      ],
     },
     {
       files: ['**/*.vue', '**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
@@ -28,16 +34,16 @@ export function defineConfig(): Array<Record<string, any>> {
         'vue/multi-word-component-names': 'off',
         'vue/script-setup-no-uses-vars': 'off',
         'vue/no-v-model-argument': 'off',
-        
+
         // TypeScript相关规则
         '@typescript-eslint/no-explicit-any': 'warn',
         '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
         '@typescript-eslint/ban-ts-comment': 'warn',
         '@typescript-eslint/no-empty-function': 'warn',
-        
+
         // Prettier规则
         'prettier/prettier': 'error',
-        
+
         // 基础规则
         'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'warn',

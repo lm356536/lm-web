@@ -21,11 +21,12 @@ async function getStagedFiles(): Promise<string[]> {
     ]);
 
     let changedList = stdout ? stdout.replace(/\0$/, '').split('\0') : [];
-    changedList = changedList.map((item) => path.resolve(process.cwd(), item));
+    changedList = changedList.map(item => path.resolve(process.cwd(), item));
     const changedSet = new Set(changedList);
     changedSet.delete('');
     return [...changedSet];
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Failed to get staged files:', error);
     return [];
   }

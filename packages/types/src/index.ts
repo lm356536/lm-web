@@ -5,7 +5,7 @@
 /**
  * 通用响应数据结构
  */
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   code: number;
   message: string;
   data: T;
@@ -29,7 +29,7 @@ export interface PaginatedData<T> {
 export interface PaginationParams {
   page?: number;
   pageSize?: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 /**
@@ -37,7 +37,7 @@ export interface PaginationParams {
  */
 export interface BaseProps {
   class?: string;
-  style?: Record<string, any>;
+  style?: Record<string, unknown>;
 }
 
 /**
@@ -53,7 +53,7 @@ export type Nullable<T> = T | null | undefined;
 /**
  * 可选键值对类型
  */
-export type Recordable<T = any> = Record<string, T>;
+export type Recordable<T = unknown> = Record<string, T>;
 
 /**
  * 深层部分可选类型
@@ -61,5 +61,5 @@ export type Recordable<T = any> = Record<string, T>;
 export type DeepPartial<T> = T extends Function
   ? T
   : T extends object
-  ? { [P in keyof T]?: DeepPartial<T[P]> }
-  : T;
+    ? { [P in keyof T]?: DeepPartial<T[P]> }
+    : T;

@@ -8,9 +8,9 @@
  * @param delay 延迟时间（毫秒）
  * @returns 防抖后的函数
  */
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   fn: T,
-  delay: number
+  delay: number,
 ): (...args: Parameters<T>) => void {
   let timer: ReturnType<typeof setTimeout> | null = null;
   return function (...args: Parameters<T>) {
@@ -29,9 +29,9 @@ export function debounce<T extends (...args: any[]) => any>(
  * @param delay 间隔时间（毫秒）
  * @returns 节流后的函数
  */
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   fn: T,
-  delay: number
+  delay: number,
 ): (...args: Parameters<T>) => void {
   let lastTime = 0;
   return function (...args: Parameters<T>) {
@@ -53,7 +53,7 @@ export function throttle<T extends (...args: any[]) => any>(
 export function get<T extends object, K extends keyof T>(
   obj: T,
   path: K,
-  defaultValue?: any
+  defaultValue?: unknown,
 ): T[K] | typeof defaultValue {
   if (obj === null || obj === undefined) {
     return defaultValue;

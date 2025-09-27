@@ -1,1 +1,1 @@
-export { default } from '@lm/prettier-config';
+export { default } from './internal/prettier-config/src/index.js';
