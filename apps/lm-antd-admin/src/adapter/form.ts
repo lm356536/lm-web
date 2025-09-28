@@ -90,7 +90,7 @@ export function enhanceFormInstance(formInstance: FormInstance): EnhancedFormIns
     getAllFieldsValue(withDisabled = false): FormValues {
       // 使用正确的getFieldsValue参数格式
       return formInstance.getFieldsValue() as FormValues;
-    }
+    },
   };
 
   return enhanced as EnhancedFormInstance;
