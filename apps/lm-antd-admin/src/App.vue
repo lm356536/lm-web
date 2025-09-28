@@ -23,7 +23,7 @@
         </a-menu-item>
         <a-menu-item key="/about" @click="navigateTo('/about')">
           <info-circle-outlined />
-          <span>关于我们</span>
+          <span>组件库</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
