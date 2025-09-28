@@ -1,14 +1,14 @@
 /**
  * 国际化配置
  */
-import { createI18n, I18nOptions, I18n } from 'vue-i18n';
-import { getPreferences } from '@/preferences';
+import { createI18n } from 'vue-i18n';
+import { getPreferences } from '@/utils/preferences';
 
 // 定义支持的语言类型
 export type Language = 'zh-CN' | 'en-US';
 
 // 定义翻译资源接口
-interface MessageSchema {
+export interface MessageSchema {
   // 应用名称和标题
   appName: string;
   appDescription: string;
@@ -344,28 +344,27 @@ const messages = {
 // 获取用户偏好的语言设置
 const getPreferredLanguage = (): Language => {
   const preferences = getPreferences();
-  return preferences.language || 'zh-CN';
+  return preferences?.language || 'zh-CN';
 };
 
 // 创建i18n实例
-const i18n: I18n<false, MessageSchema, MessageSchema, Language> = createI18n<
-  [MessageSchema],
-  Language
->({
+const i18n = createI18n({
   legacy: false, // 使用组合式API模式
   locale: getPreferredLanguage(),
   fallbackLocale: 'zh-CN',
   messages,
   silentTranslationWarn: false,
   silentFallbackWarn: false,
-} as I18nOptions<MessageSchema, Language>);
+});
 
 /**
  * 设置应用的语言
  * @param locale 语言代码
  */
 export const setLanguage = (locale: Language): void => {
-  i18n.global.locale.value = locale;
+  if (i18n.global.locale && i18n.global.locale.value) {
+    i18n.global.locale.value = locale;
+  }
 };
 
 /**
@@ -373,7 +372,10 @@ export const setLanguage = (locale: Language): void => {
  * @returns 当前语言代码
  */
 export const getCurrentLanguage = (): Language => {
-  return i18n.global.locale.value;
+  if (i18n.global.locale && i18n.global.locale.value) {
+    return i18n.global.locale.value as Language;
+  }
+  return 'zh-CN';
 };
 
 /**
@@ -395,12 +397,13 @@ import { App } from 'vue';
  */
 export function setupI18n(app: App): void {
   app.use(i18n);
-  // 开发环境的调试日志
 }
 
 /**
  * 提供i18n的useI18n函数
  */
-export const useI18n = () => i18n.global as typeof i18n.global;
+export function useI18n() {
+  return i18n.global;
+}
 
 export default i18n;

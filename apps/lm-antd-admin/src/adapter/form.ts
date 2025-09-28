@@ -2,7 +2,7 @@
  * 表单适配器
  * 统一处理Ant Design表单相关的配置和扩展
  */
-import { FormProps, FormInstance } from 'ant-design-vue';
+import { FormProps, FormInstance, type FieldValues } from 'ant-design-vue';
 
 // 表单布局常量
 export const FORM_LAYOUTS = {
@@ -49,10 +49,11 @@ export const DEFAULT_FORM_CONFIG: Partial<FormProps> = {
  * @param config 自定义配置
  */
 export function createFormConfig(config: Partial<FormProps> = {}): FormProps {
+  const layout = config.layout || DEFAULT_FORM_CONFIG.layout;
   return {
     ...DEFAULT_FORM_CONFIG,
     ...config,
-    ...(config.layout && FORM_LAYOUTS[config.layout as keyof typeof FORM_LAYOUTS]),
+    ...(layout && FORM_LAYOUTS[layout as keyof typeof FORM_LAYOUTS]),
   };
 }
 
@@ -72,17 +73,25 @@ export interface EnhancedFormInstance extends FormInstance {
  * @param formInstance 原始表单实例
  */
 export function enhanceFormInstance(formInstance: FormInstance): EnhancedFormInstance {
-  const enhanced = formInstance as EnhancedFormInstance;
+  if (!formInstance) {
+    throw new Error('Form instance cannot be null or undefined');
+  }
 
-  enhanced.setFieldsValues = function <T extends FormValues>(values: T) {
-    Object.entries(values).forEach(([field, value]) => {
-      this.setFieldValue(field, value);
-    });
+  const enhanced = {
+    ...formInstance,
+    setFieldsValues<T extends FormValues>(values: T): void {
+      // 使用setFields方法代替setFieldValue
+      const fields = Object.entries(values).map(([field, value]) => ({
+        name: field,
+        value,
+      }));
+      formInstance.setFields(fields);
+    },
+    getAllFieldsValue(withDisabled = false): FormValues {
+      // 使用正确的getFieldsValue参数格式
+      return formInstance.getFieldsValue() as FormValues;
+    }
   };
 
-  enhanced.getAllFieldsValue = function (withDisabled = false) {
-    return this.getFieldsValue(undefined, withDisabled) as FormValues;
-  };
-
-  return enhanced;
+  return enhanced as EnhancedFormInstance;
 }

@@ -8,7 +8,7 @@ coverage
 CODEOWNERS
 .nitro
 .output
-
+demo
 
 **/*.svg
 **/*.sh

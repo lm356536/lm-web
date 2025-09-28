@@ -34,7 +34,7 @@ export interface TableConfig {
   size: 'small' | 'medium' | 'large';
   rowKey: string;
   loading: boolean;
-  pagination?: boolean | PaginationConfig;
+  pagination?: boolean | Partial<PaginationConfig>;
   [key: string]: unknown;
 }
 
@@ -88,7 +88,7 @@ export function createTableConfig(config: Partial<TableConfig> = {}): TableConfi
       config.pagination !== false
         ? {
             ...DEFAULT_PAGINATION_CONFIG,
-            ...(config.pagination || {}),
+            ...(typeof config.pagination === 'object' ? config.pagination : {}),
           }
         : false,
   };

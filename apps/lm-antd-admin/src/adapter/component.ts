@@ -1,7 +1,9 @@
-import type { App } from 'vue';
+import type { App, Component } from 'vue';
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
 import * as Icons from '@ant-design/icons-vue';
+import type { MessageInstance, ModalStaticFunctions, NotificationInstance } from 'ant-design-vue';
+import { message, Modal, notification } from 'ant-design-vue';
 
 /**
  * 设置Ant Design Vue组件库
@@ -12,14 +14,25 @@ export function setupAntd(app: App): void {
   app.use(Antd);
 
   // 注册所有图标组件
-  Object.keys(Icons).forEach(key => {
+  const iconsComponent: Record<string, Component> = Icons;
+  Object.keys(iconsComponent).forEach(key => {
     // 只注册具名导出的图标组件
     if (key !== 'default') {
-      const iconComponent = Icons[key as keyof typeof Icons];
-      if (typeof iconComponent === 'object' && 'name' in iconComponent) {
+      const iconComponent = iconsComponent[key];
+      if (typeof iconComponent === 'object' && iconComponent && 'name' in iconComponent) {
         // 以组件名称作为全局注册名
-        app.component(iconComponent.name, iconComponent);
+        app.component(iconComponent.name as string, iconComponent as Component);
       }
     }
   });
+
+  // 全局挂载通知组件
+  app.config.globalProperties.$message = message;
+  app.config.globalProperties.$modal = Modal;
+  app.config.globalProperties.$notification = notification;
+
+  // 提供注入值
+  app.provide('message', message);
+  app.provide('modal', Modal);
+  app.provide('notification', notification);
 }

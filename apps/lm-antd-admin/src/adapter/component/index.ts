@@ -1,4 +1,7 @@
-import type { App } from 'vue';
+import type { App, Component } from 'vue';
+import { type MessageInstance } from 'ant-design-vue/es/message';
+import { type ModalStaticFunctions } from 'ant-design-vue/es/modal';
+import { type NotificationInstance } from 'ant-design-vue/es/notification';
 import {
   Button,
   Input,
@@ -37,8 +40,18 @@ import {
   ArrowDownOutlined,
 } from '@ant-design/icons-vue';
 
+// 全局属性类型声明
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    $message: MessageInstance;
+    $modal: ModalStaticFunctions;
+    $notification: NotificationInstance;
+    $antdConfig: AntdConfig;
+  }
+}
+
 // 定义组件类型
-export interface ComponentType {
+export interface ComponentType extends Component<any> {
   name?: string;
   props?: Record<string, unknown>;
   events?: string[];
@@ -65,9 +78,10 @@ export interface ComponentAdapter {
  * Ant Design Vue 组件适配器
  * 提供统一的组件注册和访问接口
  */
-class AntdComponentAdapter implements ComponentAdapter {
+export class AntdComponentAdapter implements ComponentAdapter {
   // 注册的组件列表
   private components: Record<string, ComponentType> = {
+    // UI组件
     Button,
     Input,
     Menu,
@@ -101,7 +115,7 @@ class AntdComponentAdapter implements ComponentAdapter {
     UploadOutlined,
     ArrowUpOutlined,
     ArrowDownOutlined,
-  };
+  } as Record<string, ComponentType>;
 
   /**
    * 安装所有组件到 Vue 应用实例
@@ -115,15 +129,15 @@ class AntdComponentAdapter implements ComponentAdapter {
 
     // 注册全局属性
     app.config.globalProperties.$message = message;
+    app.config.globalProperties.$modal = Modal;
+    app.config.globalProperties.$notification = Modal.notification;
 
     // 全局配置
-    app.config.globalProperties.$antdConfig = {
+    const $antdConfig = {
       prefixCls: 'ant',
-      size: 'middle',
+      size: 'middle' as const,
     };
-
-    // 开发环境的调试信息
-    // 开发环境的调试日志
+    app.config.globalProperties.$antdConfig = $antdConfig as AntdConfig;
   }
 
   /**

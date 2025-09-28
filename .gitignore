@@ -51,6 +51,7 @@ vite.config.ts.*
 .history
 .cursor
 .trae
+demo
 
 project-documentation
 node_modules
