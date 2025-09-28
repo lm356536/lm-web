@@ -45,6 +45,7 @@ lm-web/
 ```
 
 ### 目录说明
+
 - **apps/**: 存放所有业务应用，每个应用可独立构建和部署
 - **packages/**: 存放共享代码库，包括组件、工具函数、类型定义等
 - **internal/**: 存放内部开发工具、配置和辅助脚本
@@ -57,10 +58,10 @@ lm-web/
 ```yaml
 # 定义工作区范围
 packages:
-  - "apps/*"
-  - "packages/*"
-  - "internal/*"
-  - "playground"
+  - 'apps/*'
+  - 'packages/*'
+  - 'internal/*'
+  - 'playground'
 ```
 
 ### 2. 根目录 tsconfig.json
@@ -210,9 +211,9 @@ packages:
 ### 1. packages/components/vite.config.ts
 
 ```typescript
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [vue()],
@@ -220,19 +221,19 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: '@lm/components',
-      fileName: 'index'
+      fileName: 'index',
     },
     rollupOptions: {
       external: ['vue', 'ant-design-vue'],
       output: {
         globals: {
           vue: 'Vue',
-          'ant-design-vue': 'AntDesignVue'
-        }
-      }
-    }
-  }
-})
+          'ant-design-vue': 'AntDesignVue',
+        },
+      },
+    },
+  },
+});
 ```
 
 ### 2. packages/components/tsconfig.json
@@ -269,30 +270,30 @@ pnpm run build:web
 **apps/lm-antd-admin/vite.config.ts**
 
 ```typescript
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import { resolve } from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src')
-    }
+      '@': resolve(__dirname, 'src'),
+    },
   },
   build: {
     // 避免过大chunk警告
     chunkSizeWarningLimit: 2000,
     // 仅保留vue相关依赖的代码分割
     manualChunks: {
-      'vue-vendor': ['vue', 'vue-router']
-    }
+      'vue-vendor': ['vue', 'vue-router'],
+    },
   },
   server: {
-    port: 3001
-  }
-})
+    port: 3001,
+  },
+});
 ```
 
 ## 九、Ant Design Vue 按需引入指南
@@ -303,11 +304,11 @@ export default defineConfig({
 
 ```vue
 <script setup lang="ts">
-// 按需引入组件
-import { Card, Tag, Button } from 'ant-design-vue'
-import { HomeOutlined, UserOutlined } from '@ant-design/icons-vue'
-// 引入重置样式
-import 'ant-design-vue/dist/reset.css'
+  // 按需引入组件
+  import { Card, Tag, Button } from 'ant-design-vue';
+  import { HomeOutlined, UserOutlined } from '@ant-design/icons-vue';
+  // 引入重置样式
+  import 'ant-design-vue/dist/reset.css';
 </script>
 ```
 

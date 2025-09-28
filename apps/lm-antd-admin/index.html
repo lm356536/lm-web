@@ -5,9 +5,67 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LM Web - 基于 Ant Design 的管理系统</title>
+    <style>
+      /* 基础样式重置 */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* 应用加载动画 */
+      #app-loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #f0f2f5;
+      }
+
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #1890ff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loading-text {
+        color: #1890ff;
+        font-size: 16px;
+      }
+
+      /* 错误容器默认隐藏 */
+      #app-error {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999;
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>
+    <div id="app-loading">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">应用加载中...</div>
+    </div>
+    <div id="app-error"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

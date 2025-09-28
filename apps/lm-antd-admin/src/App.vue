@@ -1,184 +1,96 @@
 <template>
-  <a-layout class="app-layout">
-    <!-- 侧边栏 -->
-    <a-layout-sider
-      v-model:collapsed="collapsed"
-      breakpoint="lg"
-      collapsed-width="80"
-      width="256"
-      theme="light"
-    >
-      <div class="logo">
-        <h1 v-if="!collapsed">LM Web</h1>
-        <h1 v-else class="logo-collapsed">LM</h1>
-      </div>
-      <a-menu
-        v-model:selectedKeys="selectedKeys"
-        mode="inline"
-        :style="{ height: '100%', borderRight: 0 }"
-      >
-        <a-menu-item key="/" @click="navigateTo('/')">
-          <home-outlined />
-          <span>首页</span>
-        </a-menu-item>
-        <a-menu-item key="/about" @click="navigateTo('/about')">
-          <info-circle-outlined />
-          <span>组件库</span>
-        </a-menu-item>
-      </a-menu>
-    </a-layout-sider>
-
-    <!-- 主内容区域 -->
-    <a-layout>
-      <!-- 顶部导航 -->
-      <a-layout-header class="app-header">
-        <div class="header-left">
-          <a-button type="text" @click="toggleCollapsed" :style="{ fontSize: '16px' }">
-            <menu-outlined />
-          </a-button>
-        </div>
-        <div class="header-right">
-          <a-dropdown>
-            <a-button>
-              <user-outlined />
-              <span>管理员</span>
-            </a-button>
-            <template #overlay>
-              <a-menu>
-                <a-menu-item key="1">个人设置</a-menu-item>
-                <a-menu-item key="2">退出登录</a-menu-item>
-              </a-menu>
-            </template>
-          </a-dropdown>
-        </div>
-      </a-layout-header>
-
-      <!-- 内容区 -->
-      <a-layout-content class="app-content">
-        <!-- 从共享组件库按需引入的HelloWorld组件 -->
-        <div class="hello-world-container">
-          <HelloWorld title="来自共享组件库" />
-        </div>
-        <router-view />
-      </a-layout-content>
-
-      <!-- 页脚 -->
-      <a-layout-footer class="app-footer">
-        <p>© 2024 LM Web. All rights reserved.</p>
-      </a-layout-footer>
-    </a-layout>
-  </a-layout>
+  <!-- 根据路由元信息选择不同的布局 -->
+  <component :is="currentLayout">
+    <!-- 路由视图会被渲染在布局组件中 -->
+  </component>
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
-  import { useRouter } from 'vue-router';
-  // 按需引入Ant Design Vue图标
-  import {
-    MenuOutlined,
-    HomeOutlined,
-    InfoCircleOutlined,
-    UserOutlined,
-  } from '@ant-design/icons-vue';
+  import { computed, watch, onMounted } from 'vue';
+  import { useRoute } from 'vue-router';
+  import MainLayout from './layouts/MainLayout.vue';
+  import BlankLayout from './layouts/BlankLayout.vue';
+  import { useI18n } from './locales';
 
-  // 按需引入共享组件库中的组件 - 支持tree shaking
-  import { HelloWorld } from '@lm/components';
+  const route = useRoute();
+  const { t } = useI18n();
 
-  const router = useRouter();
+  // 根据路由的元信息决定使用哪个布局
+  const currentLayout = computed(() => {
+    // 如果路由配置了blank布局，则使用BlankLayout，否则使用MainLayout
+    return route.meta.layout === 'blank' ? BlankLayout : MainLayout;
+  });
 
-  // 侧边栏折叠状态
-  const collapsed = ref(false);
+  // 监听路由变化，更新页面标题
+  watch(
+    () => route.meta.title,
+    title => {
+      if (title) {
+        document.title = `${t(title as string)} - LM Web`;
+      } else {
+        document.title = 'LM Web';
+      }
+    },
+    { immediate: true },
+  );
 
-  // 当前选中的菜单
-  const selectedKeys = ref<string[]>(['/']);
-
-  // 切换侧边栏折叠状态
-  const toggleCollapsed = () => {
-    collapsed.value = !collapsed.value;
-  };
-
-  // 导航到指定路由
-  const navigateTo = (path: string) => {
-    router.push(path);
-    selectedKeys.value = [path];
-  };
-
-  // 组件挂载时执行
+  // 组件挂载时的初始化
   onMounted(() => {
-    // 根据当前路由设置选中的菜单项
-    const currentPath = router.currentRoute.value.path;
-    selectedKeys.value = [currentPath];
+    // 应用初始化逻辑
+    // 开发环境的调试日志
   });
 </script>
 
-<style scoped>
-  .app-layout {
-    min-height: 100vh;
-  }
-
-  .logo {
-    height: 64px;
-    background: #1890ff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
+<style>
+  /* 全局样式重置 */
+  * {
+    box-sizing: border-box;
     margin: 0;
-    padding: 0 16px;
+    padding: 0;
   }
 
-  .logo h1 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
+  html,
+  body {
+    font-family:
+      'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑',
+      Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+    overflow-x: hidden;
   }
 
-  .logo-collapsed {
-    font-size: 16px !important;
+  #app {
+    height: 100%;
   }
 
-  .app-header {
-    height: 64px;
-    background: #fff;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 10;
+  /* 滚动条样式 */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
   }
 
-  .header-left {
-    display: flex;
-    align-items: center;
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
   }
 
-  .header-right {
-    display: flex;
-    align-items: center;
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
   }
 
-  .app-content {
-    margin: 16px;
-    padding: 24px;
-    background: #fff;
-    min-height: 280px;
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
   }
 
-  .app-footer {
-    text-align: center;
-    background: #f0f2f5;
-    padding: 24px;
-    margin: 0;
-    color: rgba(0, 0, 0, 0.65);
+  /* 过渡动画 */
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.3s;
   }
 
-  /* HelloWorld组件容器样式 */
-  .hello-world-container {
-    padding: 20px;
-    border-bottom: 1px solid #f0f0f0;
-    margin-bottom: 20px;
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
   }
 </style>

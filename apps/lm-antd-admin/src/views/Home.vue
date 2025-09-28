@@ -1,12 +1,79 @@
 <template>
-  <div class="home-container">
-    <a-card :title="pageTitle" :bordered="false">
-      <p class="page-description">
-        欢迎使用 LM Web 管理系统，这是一个基于 Vue 3、TypeScript 和 Ant Design Vue
-        构建的现代化应用。
-      </p>
+  <div class="home">
+    <a-card title="欢迎使用LM Web管理系统" :bordered="false">
+      <template #extra>
+        <a-button type="primary" @click="fetchData">刷新数据</a-button>
+      </template>
 
-      <div class="feature-section">
+      <div class="system-info">
+        <h2>{{ t('welcomeMessage') }}</h2>
+        <p>{{ t('systemDescription') }}</p>
+
+        <a-row :gutter="[16, 16]" class="stats-row">
+          <a-col :xs="24" :sm="12" :lg="6">
+            <a-statistic
+              title="用户总数"
+              :value="stats.users"
+              :precision="0"
+              :value-style="{ color: '#3f8600' }"
+              prefix-icon="user-outlined"
+              suffix="人"
+            />
+          </a-col>
+          <a-col :xs="24" :sm="12" :lg="6">
+            <a-statistic
+              title="组件数量"
+              :value="stats.components"
+              :precision="0"
+              :value-style="{ color: '#1890ff' }"
+              prefix-icon="appstore-outlined"
+              suffix="个"
+            />
+          </a-col>
+          <a-col :xs="24" :sm="12" :lg="6">
+            <a-statistic
+              title="今日访问"
+              :value="stats.todayVisits"
+              :precision="0"
+              :value-style="{ color: '#fa8c16' }"
+              prefix-icon="eye-outlined"
+              suffix="次"
+            />
+          </a-col>
+          <a-col :xs="24" :sm="12" :lg="6">
+            <a-statistic
+              title="系统版本"
+              value="v1.0.0"
+              :value-style="{ color: '#722ed1' }"
+              prefix-icon="code-outlined"
+            />
+          </a-col>
+        </a-row>
+      </div>
+
+      <div class="recent-activities">
+        <h3>{{ t('recentActivities') }}</h3>
+        <a-list item-layout="horizontal" :data-source="activities">
+          <template #renderItem="{ item }">
+            <a-list-item>
+              <a-list-item-meta>
+                <template #avatar>
+                  <a-avatar icon="clock-circle-outlined" />
+                </template>
+                <template #title>
+                  <a href="#">{{ item.title }}</a>
+                </template>
+                <template #description>
+                  {{ item.time }}
+                </template>
+              </a-list-item-meta>
+              <a-tag :color="item.type">{{ item.type }}</a-tag>
+            </a-list-item>
+          </template>
+        </a-list>
+      </div>
+
+      <div class="feature-section" style="margin-top: 30px">
         <h3>组件展示</h3>
         <!-- 使用我们开发的 HelloWorld 组件 -->
         <HelloWorld
@@ -28,102 +95,67 @@
             @blur="handleInputBlur"
           />
           <p style="margin-top: 10px">输入值: {{ inputValue }}</p>
-
-          <!-- 不同尺寸的输入框 -->
-          <div style="margin-top: 20px">
-            <h5>不同尺寸:</h5>
-            <LmInput
-              v-model="smallInput"
-              :placeholder="'小尺寸'"
-              :size="'small'"
-              style="width: 200px; margin-right: 10px; margin-bottom: 10px"
-            />
-            <LmInput
-              v-model="mediumInput"
-              :placeholder="'中尺寸'"
-              :size="'middle'"
-              style="width: 200px; margin-right: 10px; margin-bottom: 10px"
-            />
-            <LmInput
-              v-model="largeInput"
-              :placeholder="'大尺寸'"
-              :size="'large'"
-              style="width: 200px; margin-bottom: 10px"
-            />
-          </div>
-
-          <!-- 禁用状态 -->
-          <div style="margin-top: 20px">
-            <h5>禁用状态:</h5>
-            <LmInput
-              v-model="disabledInput"
-              :placeholder="'禁用状态'"
-              :disabled="true"
-              style="width: 200px"
-            />
-          </div>
         </div>
-
-        <h3 style="margin-top: 30px">示例组件</h3>
-        <a-menu mode="inline" style="width: 200px">
-          <a-menu-item key="1">
-            <router-link to="/">首页</router-link>
-          </a-menu-item>
-          <a-menu-item key="3">
-            <router-link to="/about">关于我们</router-link>
-          </a-menu-item>
-        </a-menu>
-      </div>
-
-      <div class="features-section">
-        <h3>系统功能</h3>
-        <a-row :gutter="[16, 16]">
-          <a-col :span="8">
-            <a-card hoverable :bordered="false">
-              <a-card-meta
-                title="Monorepo 架构"
-                description="使用 pnpm workspace 构建的多包项目管理"
-              />
-            </a-card>
-          </a-col>
-          <a-col :span="8">
-            <a-card hoverable :bordered="false">
-              <a-card-meta title="共享组件库" description="可复用的组件和工具函数" />
-            </a-card>
-          </a-col>
-          <a-col :span="8">
-            <a-card hoverable :bordered="false">
-              <a-card-meta
-                title="Ant Design Vue"
-                description="基于 Ant Design 设计体系的企业级 UI 组件库"
-              />
-            </a-card>
-          </a-col>
-        </a-row>
       </div>
     </a-card>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
-  // 按需引入Ant Design Vue组件和功能
+  import { ref, onMounted } from 'vue';
+  import { store } from '@/store';
+  import { useI18n } from '@/locales';
+  // 移除未使用的导入
   import { message } from 'ant-design-vue';
-  // Ant Design Vue v4 重置样式
-  import 'ant-design-vue/dist/reset.css';
 
   // 导入我们的组件
   import { HelloWorld, LmInput } from '@lm/components';
 
-  // 页面标题
-  const pageTitle = ref('欢迎来到 LM Web 管理系统');
+  // 使用国际化
+  const { t } = useI18n();
+
+  // 仪表盘统计数据
+  const stats = ref({
+    users: 128,
+    components: 45,
+    todayVisits: 256,
+  });
+
+  // 活动列表
+  const activities = ref([
+    { id: 1, title: '系统已更新到最新版本', time: '10分钟前', type: 'success' },
+    { id: 2, title: '新增了5个组件', time: '1小时前', type: 'info' },
+    { id: 3, title: '完成了数据备份', time: '3小时前', type: 'default' },
+    { id: 4, title: '修复了已知问题', time: '昨天', type: 'warning' },
+  ]);
 
   // 输入框相关数据
   const inputValue = ref('');
-  const smallInput = ref('');
-  const mediumInput = ref('');
-  const largeInput = ref('');
-  const disabledInput = ref('禁用的输入框');
+
+  // 获取数据
+  const fetchData = async () => {
+    try {
+      store.setLoading(true);
+      // 在实际应用中，这里会调用API获取数据
+      // const response = await fetchDashboardStats();
+      // stats.value = response.data;
+
+      // 模拟API调用延迟
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // 模拟更新数据
+      stats.value = {
+        users: Math.floor(Math.random() * 200) + 100,
+        components: Math.floor(Math.random() * 50) + 30,
+        todayVisits: Math.floor(Math.random() * 300) + 200,
+      };
+    } catch (error) {
+      // 错误处理，在实际应用中可能需要更复杂的错误处理逻辑
+      store.setError(t('fetchDataFailed'));
+    } finally {
+      store.setLoading(false);
+    }
+  };
 
   // 处理 HelloWorld 组件的点击事件
   const handleHelloWorldClick = () => {
@@ -132,37 +164,52 @@
 
   // 处理输入事件
   const handleInput = (_event: Event) => {
-    // 生产环境应移除 console 语句
-    // console.log('输入内容变化:', inputValue.value);
+    // 移除开发环境的调试日志
   };
 
   // 处理聚焦事件
   const handleInputFocus = () => {
-    // 生产环境应移除 console 语句
-    // console.log('输入框聚焦');
+    // 移除开发环境的调试日志
   };
 
   // 处理失焦事件
   const handleInputBlur = () => {
-    // 生产环境应移除 console 语句
-    // console.log('输入框失焦');
+    // 移除开发环境的调试日志
   };
+
+  // 组件挂载时获取数据
+  onMounted(() => {
+    fetchData();
+  });
 </script>
 
 <style scoped>
-  .home-container {
+  .home {
     padding: 0;
   }
 
-  .page-description {
-    margin-bottom: 30px;
-    line-height: 1.6;
-    color: #666;
+  .system-info {
+    margin-bottom: 32px;
   }
 
-  .feature-section,
-  .features-section {
-    margin-top: 30px;
+  .system-info h2 {
+    margin-bottom: 16px;
+    color: #1890ff;
+  }
+
+  .system-info p {
+    margin-bottom: 24px;
+    color: #666;
+    font-size: 16px;
+  }
+
+  .stats-row {
+    margin-bottom: 24px;
+  }
+
+  .recent-activities h3 {
+    margin-bottom: 16px;
+    color: #333;
   }
 
   h3 {
@@ -177,11 +224,5 @@
     font-size: 16px;
     margin-bottom: 10px;
     color: #333;
-  }
-
-  h5 {
-    font-size: 14px;
-    margin-bottom: 10px;
-    color: #666;
   }
 </style>

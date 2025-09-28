@@ -14,7 +14,8 @@
     "dev:web": "pnpm -F @lm/lm-antd-admin run dev",
     "lint": "eslint . --fix --max-warnings 0",
     "format": "prettier . --write --ignore-path .gitignore",
-    "prepare": "pnpm run build:packages"
+    "prepare": "pnpm run build:packages",
+    "lint:fix": "pnpm run format &&  pnpm run lint"
   },
   "devDependencies": {
     "@types/eslint": "catalog:",
