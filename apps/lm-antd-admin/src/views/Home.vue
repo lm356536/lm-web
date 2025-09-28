@@ -41,7 +41,7 @@
             <LmInput
               v-model="mediumInput"
               :placeholder="'中尺寸'"
-              :size="'medium'"
+              :size="'middle'"
               style="width: 200px; margin-right: 10px; margin-bottom: 10px"
             />
             <LmInput

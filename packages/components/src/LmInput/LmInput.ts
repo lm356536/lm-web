@@ -14,7 +14,7 @@ export interface LmInputProps {
   /** 最大输入长度 */
   maxlength?: number;
   /** 输入框尺寸 */
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'middle' | 'large';
   /** 输入框类型 */
   type?: 'text' | 'password' | 'email' | 'number';
 }
@@ -34,7 +34,7 @@ export interface LmInputEmits {
 // 组件实例接口，供父组件通过ref获取
 export interface LmInputInstance {
   /** 输入框DOM引用 */
-  inputRef: Ref<HTMLInputElement | null>;
+  inputRef: Ref<HTMLElement | null>;
   /** 聚焦方法 */
   focus: () => void;
   /** 失焦方法 */
