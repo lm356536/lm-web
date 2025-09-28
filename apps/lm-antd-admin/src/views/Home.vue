@@ -15,6 +15,64 @@
           :showCount="true"
           @click="handleHelloWorldClick"
         />
+
+        <!-- 使用我们开发的 LmInput 组件 -->
+        <div class="input-demo" style="margin-top: 30px">
+          <h4>LmInput 组件示例</h4>
+          <LmInput
+            v-model="inputValue"
+            :placeholder="'请输入内容'"
+            :size="'medium'"
+            @input="handleInput"
+            @focus="handleInputFocus"
+            @blur="handleInputBlur"
+          />
+          <p style="margin-top: 10px">输入值: {{ inputValue }}</p>
+
+          <!-- 不同尺寸的输入框 -->
+          <div style="margin-top: 20px">
+            <h5>不同尺寸:</h5>
+            <LmInput
+              v-model="smallInput"
+              :placeholder="'小尺寸'"
+              :size="'small'"
+              style="width: 200px; margin-right: 10px; margin-bottom: 10px"
+            />
+            <LmInput
+              v-model="mediumInput"
+              :placeholder="'中尺寸'"
+              :size="'medium'"
+              style="width: 200px; margin-right: 10px; margin-bottom: 10px"
+            />
+            <LmInput
+              v-model="largeInput"
+              :placeholder="'大尺寸'"
+              :size="'large'"
+              style="width: 200px; margin-bottom: 10px"
+            />
+          </div>
+
+          <!-- 禁用状态 -->
+          <div style="margin-top: 20px">
+            <h5>禁用状态:</h5>
+            <LmInput
+              v-model="disabledInput"
+              :placeholder="'禁用状态'"
+              :disabled="true"
+              style="width: 200px"
+            />
+          </div>
+        </div>
+
+        <h3 style="margin-top: 30px">示例组件</h3>
+        <a-menu mode="inline" style="width: 200px">
+          <a-menu-item key="1">
+            <router-link to="/">首页</router-link>
+          </a-menu-item>
+          <a-menu-item key="3">
+            <router-link to="/about">关于我们</router-link>
+          </a-menu-item>
+        </a-menu>
       </div>
 
       <div class="features-section">
@@ -54,14 +112,40 @@
   // Ant Design Vue v4 重置样式
   import 'ant-design-vue/dist/reset.css';
 
-  import { HelloWorld } from '@lm/components';
+  // 导入我们的组件
+  import { HelloWorld, LmInput } from '@lm/components';
 
   // 页面标题
   const pageTitle = ref('欢迎来到 LM Web 管理系统');
 
+  // 输入框相关数据
+  const inputValue = ref('');
+  const smallInput = ref('');
+  const mediumInput = ref('');
+  const largeInput = ref('');
+  const disabledInput = ref('禁用的输入框');
+
   // 处理 HelloWorld 组件的点击事件
   const handleHelloWorldClick = () => {
     message.success('HelloWorld 组件被点击了');
+  };
+
+  // 处理输入事件
+  const handleInput = (_event: Event) => {
+    // 生产环境应移除 console 语句
+    // console.log('输入内容变化:', inputValue.value);
+  };
+
+  // 处理聚焦事件
+  const handleInputFocus = () => {
+    // 生产环境应移除 console 语句
+    // console.log('输入框聚焦');
+  };
+
+  // 处理失焦事件
+  const handleInputBlur = () => {
+    // 生产环境应移除 console 语句
+    // console.log('输入框失焦');
   };
 </script>
 
@@ -89,15 +173,15 @@
     border-bottom: 1px solid #f0f0f0;
   }
 
-  /* 响应式调整 */
-  @media (max-width: 768px) {
-    .feature-section,
-    .features-section {
-      margin-top: 20px;
-    }
+  h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+  }
 
-    h3 {
-      font-size: 16px;
-    }
+  h5 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #666;
   }
 </style>

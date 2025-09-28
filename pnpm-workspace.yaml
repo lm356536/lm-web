@@ -5,7 +5,6 @@ packages:
   - apps/*
   - scripts/*
   - docs
-  - playground
 
 catalog:
   '@ast-grep/napi': ^0.37.0
@@ -142,7 +141,7 @@ catalog:
   rimraf: ^6.0.1
   rollup: ^4.44.1
   rollup-plugin-visualizer: ^5.14.0
-  sass: ^1.89.2
+  sass: ^1.93.2
   secure-ls: ^2.0.0
   sortablejs: ^1.15.6
   stylelint: ^16.21.0

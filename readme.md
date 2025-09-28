@@ -14,7 +14,6 @@
 ├── internal/               # 内部工具和配置
 │   ├── lint-configs/       # ESLint 配置
 │   └── vite-config/        # Vite 共享配置
-├── playground/             # 开发测试环境
 ├── scripts/                # 构建和部署脚本
 └── docs/                   # 项目文档
 ```
@@ -40,9 +39,6 @@ pnpm dev
 
 # 仅启动 lm-antd-admin 应用
 pnpm dev:web
-
-# 仅启动 playground 应用
-pnpm dev:play
 ```
 
 ### 构建命令

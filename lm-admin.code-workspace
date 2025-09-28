@@ -9,10 +9,6 @@
       "path": "apps/web",
     },
     {
-      "name": "@lm/playground",
-      "path": "playground",
-    },
-    {
       "name": "@lm/components",
       "path": "packages/components",
     },

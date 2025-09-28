@@ -6,7 +6,7 @@
 
 - 基于 Vue 3、TypeScript、Vite 创建 Monorepo 架构
 - 配置 pnpm-workspace.yaml 实现多包管理
-- 建立 apps/lm-antd-admin 和 playground 子包
+- 建立 apps/lm-antd-admin 子包
 - 创建 packages 目录，包含 components、utils 等共享库
 - 实现 internal 目录存放项目内部配置工具
 
@@ -21,13 +21,10 @@
 ### 兼容性问题修复
 
 - 解决 vue-tsc 与 TypeScript 版本不兼容问题
-- 修复 playground/tsconfig.json 中 extends 路径解析失败
 - 安装 terser 解决 Vite 构建依赖缺失
-- 为 playground 添加 build-simple.js 跳过类型检查的构建脚本
 
 ### 功能实现
 
-- 在 playground 中成功构建并启动开发服务器
 - 实现子包间依赖通过 workspace:\* 协议引用
 - 支持独立构建和运行各子包
 

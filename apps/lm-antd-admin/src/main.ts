@@ -5,6 +5,8 @@ import router from './router';
 import 'ant-design-vue/dist/reset.css';
 // 全局部分注册 ant-design-vue 组件
 import { Button, message, Layout, Menu, Dropdown } from 'ant-design-vue';
+// 导入我们的组件库
+import LmComponents from '@lm/components';
 
 // 创建Vue应用实例
 const app = createApp(App);
@@ -17,6 +19,8 @@ app.use(Button);
 app.use(Layout);
 app.use(Menu);
 app.use(Dropdown);
+// 使用我们的组件库
+app.use(LmComponents);
 
 // 将 message 挂载到全局属性上
 app.config.globalProperties.$message = message;

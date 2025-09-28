@@ -22,7 +22,6 @@ const routes: RouteRecordRaw[] = [
     meta: { title: '页面不存在' },
   },
 ];
-
 // 创建路由实例
 const router = createRouter({
   history: createWebHistory(),
