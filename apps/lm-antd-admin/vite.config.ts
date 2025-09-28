@@ -10,15 +10,26 @@ export default defineConfig({
     },
   },
   build: {
-    // 增加chunkSizeWarningLimit值避免过大chunk警告
-    chunkSizeWarningLimit: 2000,
-    // 按需引入antd后，简化代码分割配置
+    // 提高chunkSizeWarningLimit值避免过大chunk警告
+    chunkSizeWarningLimit: 3000,
+    // 优化代码分割配置
     rollupOptions: {
       output: {
         manualChunks: {
-          // 仅保留vue相关依赖的代码分割
-          'vue-vendor': ['vue'],
+          // Vue相关依赖
+          'vue-vendor': ['vue', 'vue-router'],
+          // Ant Design Vue核心
+          'antd-core': ['ant-design-vue'],
+          // 图标库单独打包
+          'antd-icons': ['@ant-design/icons-vue'],
+          // API相关代码
+          'api-vendor': ['axios'],
+          // 国际化相关代码
+          'i18n-vendor': ['vue-i18n'],
         },
+        // 自动分割代码块
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
       },
     },
   },
