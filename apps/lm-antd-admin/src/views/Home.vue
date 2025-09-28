@@ -105,7 +105,6 @@
   import { ref, onMounted } from 'vue';
   import { store } from '@/store';
   import { useI18n } from '@/locales';
-  // 移除未使用的导入
   import { message } from 'ant-design-vue';
 
   // 导入我们的组件
@@ -212,17 +211,13 @@
     color: #333;
   }
 
-  h3 {
-    font-size: 18px;
+  .feature-section h3 {
     margin-bottom: 16px;
     color: #333;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #f0f0f0;
   }
 
-  h4 {
-    font-size: 16px;
+  .input-demo h4 {
     margin-bottom: 10px;
-    color: #333;
+    color: #666;
   }
 </style>

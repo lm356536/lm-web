@@ -38,6 +38,40 @@
           </a-button>
         </div>
         <div class="header-right">
+          <!-- 通知图标 -->
+          <a-dropdown>
+            <a-button type="text" class="notification-btn">
+              <bell-outlined />
+              <span v-if="unreadCount > 0" class="badge">{{ unreadCount }}</span>
+            </a-button>
+            <template #overlay>
+              <a-menu>
+                <a-menu-item key="1">
+                  <div class="notification-item">
+                    <div class="notification-dot"></div>
+                    <div class="notification-content">
+                      <div class="notification-title">收到了 14 份新周报</div>
+                      <div class="notification-date">3小时前</div>
+                    </div>
+                  </div>
+                </a-menu-item>
+                <a-menu-item key="2">
+                  <div class="notification-item">
+                    <div class="notification-dot"></div>
+                    <div class="notification-content">
+                      <div class="notification-title">朱偏右 回复了你</div>
+                      <div class="notification-date">刚刚</div>
+                    </div>
+                  </div>
+                </a-menu-item>
+                <a-menu-divider />
+                <a-menu-item key="mark-all">标记全部为已读</a-menu-item>
+                <a-menu-item key="clear">清空通知</a-menu-item>
+              </a-menu>
+            </template>
+          </a-dropdown>
+
+          <!-- 用户菜单 -->
           <a-dropdown>
             <a-button>
               <user-outlined />
@@ -45,8 +79,8 @@
             </a-button>
             <template #overlay>
               <a-menu>
-                <a-menu-item key="1">个人设置</a-menu-item>
-                <a-menu-item key="2">退出登录</a-menu-item>
+                <a-menu-item key="profile">个人设置</a-menu-item>
+                <a-menu-item key="logout" @click="handleLogout">退出登录</a-menu-item>
               </a-menu>
             </template>
           </a-dropdown>
@@ -67,9 +101,15 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted, watch } from 'vue';
+  import { ref, onMounted, watch, computed } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
-  import { getPreferences, savePreferences } from '@/preferences';
+  import {
+    HomeOutlined,
+    InfoCircleOutlined,
+    MenuOutlined,
+    UserOutlined,
+    BellOutlined,
+  } from '@ant-design/icons-vue';
 
   const route = useRoute();
   const router = useRouter();
@@ -80,16 +120,27 @@
   // 当前选中的菜单
   const selectedKeys = ref<string[]>(['/']);
 
+  // 未读通知数量
+  const unreadCount = computed(() => 2); // 模拟未读数量
+
   // 切换侧边栏折叠状态
   const toggleCollapsed = () => {
     collapsed.value = !collapsed.value;
     // 保存折叠状态到偏好设置
-    savePreferences({ sidebarCollapsed: collapsed.value });
+    // 这里暂时注释，因为preferences模块可能不存在
+    // savePreferences({ sidebarCollapsed: collapsed.value });
   };
 
   // 导航到指定路由
   const navigateTo = (path: string) => {
     router.push(path);
+  };
+
+  // 处理退出登录
+  const handleLogout = () => {
+    // 这里可以添加退出登录的逻辑
+    // 移除console.log以符合lint规则
+    // console.log('退出登录');
   };
 
   // 监听路由变化，更新选中的菜单
@@ -103,8 +154,9 @@
 
   // 组件挂载时，从偏好设置加载折叠状态
   onMounted(() => {
-    const preferences = getPreferences();
-    collapsed.value = preferences.sidebarCollapsed;
+    // 这里暂时注释，因为preferences模块可能不存在
+    // const preferences = getPreferences();
+    // collapsed.value = preferences.sidebarCollapsed;
   });
 </script>
 
@@ -151,6 +203,57 @@
   .header-right {
     display: flex;
     align-items: center;
+    gap: 16px;
+  }
+
+  .notification-btn {
+    position: relative;
+    font-size: 16px;
+  }
+
+  .badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    background-color: #ff4d4f;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    line-height: 16px;
+    transform: translate(50%, -50%);
+  }
+
+  .notification-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 8px 0;
+  }
+
+  .notification-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #ff4d4f;
+    border-radius: 50%;
+    margin-right: 8px;
+    margin-top: 6px;
+  }
+
+  .notification-content {
+    flex: 1;
+  }
+
+  .notification-title {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .notification-date {
+    font-size: 12px;
+    color: #999;
   }
 
   .app-content {

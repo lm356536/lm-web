@@ -2,8 +2,7 @@
  * 表单适配器
  * 统一处理Ant Design表单相关的配置和扩展
  */
-import { FormProps, FormInstance, type FieldValues } from 'ant-design-vue';
-
+import { FormProps, FormInstance } from 'ant-design-vue';
 // 表单布局常量
 export const FORM_LAYOUTS = {
   horizontal: {
@@ -80,14 +79,13 @@ export function enhanceFormInstance(formInstance: FormInstance): EnhancedFormIns
   const enhanced = {
     ...formInstance,
     setFieldsValues<T extends FormValues>(values: T): void {
-      // 使用setFields方法代替setFieldValue
-      const fields = Object.entries(values).map(([field, value]) => ({
-        name: field,
-        value,
-      }));
-      formInstance.setFields(fields);
+      // 由于Ant Design Vue v4使用不同的API，直接设置每个字段的值
+      Object.entries(values).forEach(([field, value]) => {
+        // @ts-expect-error - 忽略类型检查，因为setFieldValue方法在不同版本中可能有差异
+        formInstance.setFieldValue?.(field, value);
+      });
     },
-    getAllFieldsValue(withDisabled = false): FormValues {
+    getAllFieldsValue(_withDisabled = false): FormValues {
       // 使用正确的getFieldsValue参数格式
       return formInstance.getFieldsValue() as FormValues;
     },

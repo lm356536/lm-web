@@ -17,6 +17,8 @@ const config = [
       '**/coverage/**',
       '**/.git/**',
       '**/pnpm-lock.yaml',
+      '**/demo/**',
+      '**/demo-project-analysis.md',
     ],
   },
   {

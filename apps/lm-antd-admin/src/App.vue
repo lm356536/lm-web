@@ -8,8 +8,7 @@
 <script setup lang="ts">
   import { computed, watch, onMounted } from 'vue';
   import { useRoute } from 'vue-router';
-  import MainLayout from './layouts/MainLayout.vue';
-  import BlankLayout from './layouts/BlankLayout.vue';
+  import { BasicLayout, AuthLayout } from './layouts';
   import { useI18n } from './locales';
 
   const route = useRoute();
@@ -17,8 +16,8 @@
 
   // 根据路由的元信息决定使用哪个布局
   const currentLayout = computed(() => {
-    // 如果路由配置了blank布局，则使用BlankLayout，否则使用MainLayout
-    return route.meta.layout === 'blank' ? BlankLayout : MainLayout;
+    // 如果路由配置了auth布局，则使用AuthLayout，否则使用BasicLayout
+    return route.meta.layout === 'auth' ? AuthLayout : BasicLayout;
   });
 
   // 监听路由变化，更新页面标题

@@ -48,6 +48,9 @@ export interface MessageSchema {
   largeSize: string;
   disabledState: string;
   toggleDisabled: string;
+
+  // 添加字符串索引签名以兼容vue-i18n
+  [key: string]: string | object | MessageSchema;
   placeholder: string;
   inputValue: string;
   selectComponent: string;
@@ -344,7 +347,8 @@ const messages = {
 // 获取用户偏好的语言设置
 const getPreferredLanguage = (): Language => {
   const preferences = getPreferences();
-  return preferences?.language || 'zh-CN';
+  const lang = preferences?.language;
+  return lang === 'zh-CN' || lang === 'en-US' ? lang : 'zh-CN';
 };
 
 // 创建i18n实例

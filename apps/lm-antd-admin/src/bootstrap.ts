@@ -56,7 +56,7 @@ export async function bootstrap(app: AppType) {
   setupStore(app);
 
   // 4. 初始化组件适配
-  setupAntd(app);
+  await setupAntd(app);
 
   // 5. 应用用户偏好设置到应用实例
   applyPreferencesToApp(app);

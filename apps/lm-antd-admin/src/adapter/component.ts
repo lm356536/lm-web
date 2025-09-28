@@ -2,9 +2,7 @@ import type { App, Component } from 'vue';
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
 import * as Icons from '@ant-design/icons-vue';
-import type { MessageInstance, ModalStaticFunctions, NotificationInstance } from 'ant-design-vue';
 import { message, Modal, notification } from 'ant-design-vue';
-
 /**
  * 设置Ant Design Vue组件库
  * @param app 应用实例

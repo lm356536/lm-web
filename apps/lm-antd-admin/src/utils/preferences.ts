@@ -29,6 +29,8 @@ export function getPreferences(): UserPreferences {
     // 目前返回默认值
     return { ...DEFAULT_PREFERENCES };
   } catch (error) {
+    // 在生产环境中移除error日志
+    /* eslint-disable-next-line no-console */
     console.error('Failed to get user preferences:', error);
     return { ...DEFAULT_PREFERENCES };
   }
@@ -41,8 +43,11 @@ export function getPreferences(): UserPreferences {
 export function savePreferences(preferences: Partial<UserPreferences>): void {
   try {
     // 在实际项目中，这里可能会保存到localStorage或API
+    /* eslint-disable-next-line no-console */
     console.log('Preferences saved:', preferences);
   } catch (error) {
+    // 在生产环境中移除error日志
+    /* eslint-disable-next-line no-console */
     console.error('Failed to save user preferences:', error);
   }
 }

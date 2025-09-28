@@ -7,35 +7,49 @@ import {
   RouteLocationNormalized,
 } from 'vue-router';
 import { App } from 'vue';
+import { BasicLayout } from '@/layouts';
+
+// 导入认证布局（如果需要的话）
+// import { AuthLayout } from '@/layouts'; // 暂时注释，因为我们还没有登录页面
 
 // 路由配置
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'Home',
-    component: defineAsyncComponent(() => import('@/views/Home.vue')),
-    meta: {
-      title: '首页',
-      requiresAuth: false,
-    },
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: defineAsyncComponent(() => import('@/views/About.vue')),
-    meta: {
-      title: '关于我们',
-      requiresAuth: false,
-    },
+    component: BasicLayout,
+    children: [
+      {
+        path: '',
+        name: 'Home',
+        component: defineAsyncComponent(() => import('@/views/Home.vue')),
+        meta: {
+          title: '首页',
+          requiresAuth: false,
+        },
+      },
+      {
+        path: 'about',
+        name: 'About',
+        component: defineAsyncComponent(() => import('@/views/About.vue')),
+        meta: {
+          title: '关于我们',
+          requiresAuth: false,
+        },
+      },
+    ],
   },
   {
     // 404页面
-    path: '/:pathMatch(.*)*',
+    path: '/404',
     name: 'NotFound',
     component: defineAsyncComponent(() => import('@/views/NotFound.vue')),
     meta: {
       title: '页面不存在',
     },
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/404',
   },
 ];
 
