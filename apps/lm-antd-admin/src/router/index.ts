@@ -6,24 +6,25 @@ import {
   RouteLocationNormalized,
 } from 'vue-router';
 import { App } from 'vue';
-import { BasicLayout } from '@/layouts';
-
-// 导入认证布局（如果需要的话）
-// import { AuthLayout } from '@/layouts'; // 暂时注释，因为我们还没有登录页面
+import { BasicLayout, AuthLayout } from '@/layouts';
 
 // 路由配置
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
+    redirect: '/auth/login',
+  },
+  {
+    path: '/app',
     component: BasicLayout,
     children: [
       {
-        path: '',
+        path: 'home',
         name: 'Home',
         component: () => import('@/views/Home.vue'),
         meta: {
           title: '首页',
-          requiresAuth: false,
+          requiresAuth: true,
         },
       },
       {
@@ -32,6 +33,21 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/About.vue'),
         meta: {
           title: '关于我们',
+          requiresAuth: false,
+        },
+      },
+    ],
+  },
+  {
+    path: '/auth',
+    component: AuthLayout,
+    children: [
+      {
+        path: 'login',
+        name: 'Login',
+        component: () => import('@/views/Login.vue'),
+        meta: {
+          title: '用户登录',
           requiresAuth: false,
         },
       },
@@ -75,10 +91,8 @@ router.beforeEach(
     if (_to.meta.requiresAuth) {
       const token = localStorage.getItem('authToken');
       if (!token) {
-        // 未登录，跳转到登录页（如果有）
-        // next({ name: 'Login' });
-
-        next();
+        // 未登录，跳转到登录页
+        next({ name: 'Login' });
       } else {
         next();
       }
