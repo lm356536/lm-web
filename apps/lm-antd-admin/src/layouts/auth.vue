@@ -21,7 +21,7 @@
           <p>{{ description || '请输入您的账号信息以开始管理您的项目' }}</p>
         </div>
         <div class="auth-content">
-          <slot />
+          <Login />
         </div>
         <div class="auth-footer">
           <slot name="toolbar" />
@@ -33,6 +33,7 @@
 </template>
 
 <script setup lang="ts">
+  import Login from '../views/Login.vue';
   import { computed } from 'vue';
 
   interface Props {

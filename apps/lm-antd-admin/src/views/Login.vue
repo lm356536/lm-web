@@ -34,9 +34,12 @@
           v-model:value="accountLoginForm.username"
           placeholder="请输入用户名或邮箱"
           allow-clear
-          prefix-icon="user"
           size="large"
-        />
+        >
+          <template #prefix>
+            <UserOutlined />
+          </template>
+        </a-input>
       </a-form-item>
 
       <a-form-item name="password" label="密码">
@@ -44,9 +47,12 @@
           v-model:value="accountLoginForm.password"
           placeholder="请输入密码"
           visibility-toggle
-          prefix-icon="lock"
           size="large"
-        />
+        >
+          <template #prefix>
+            <LockOutlined />
+          </template>
+        </a-input-password>
       </a-form-item>
 
       <div class="form-options">
@@ -86,21 +92,28 @@
           v-model:value="phoneLoginForm.phone"
           placeholder="请输入手机号"
           allow-clear
-          prefix-icon="mobile"
           size="large"
-        />
+        >
+          <template #prefix>
+            <MobileOutlined />
+          </template>
+        </a-input>
       </a-form-item>
 
       <a-form-item name="verificationCode" label="验证码">
         <a-row :gutter="12">
           <a-col :span="16">
+            <!-- 修复点1: 将错误的 VerifiedOutlined 替换为 CheckCircleOutlined -->
             <a-input
               v-model:value="phoneLoginForm.verificationCode"
               placeholder="请输入验证码"
               allow-clear
-              prefix-icon="verified"
               size="large"
-            />
+            >
+              <template #prefix>
+                <VerifiedOutlined />
+              </template>
+            </a-input>
           </a-col>
           <a-col :span="8">
             <a-button
@@ -158,16 +171,16 @@
       </div>
       <div class="login-icons">
         <a-button type="text" class="login-icon-btn" title="企业微信">
-          <a-icon type="wechat" class="login-icon" />
+          <WechatOutlined class="login-icon" />
         </a-button>
         <a-button type="text" class="login-icon-btn" title="钉钉">
-          <a-icon type="dingding" class="login-icon" />
+          <SmileOutlined class="login-icon" />
         </a-button>
         <a-button type="text" class="login-icon-btn" title="GitHub">
-          <a-icon type="github" class="login-icon" />
+          <GithubOutlined class="login-icon" />
         </a-button>
         <a-button type="text" class="login-icon-btn" title="Gitee">
-          <a-icon type="code-sandbox" class="login-icon" />
+          <InfoCircleOutlined class="login-icon" />
         </a-button>
       </div>
     </div>
@@ -181,36 +194,6 @@
   import { useRouter } from 'vue-router';
   import type { FormInstance } from 'ant-design-vue';
   import { store } from '@/store'; // 引入状态管理
-  // 导入Ant Design Vue组件
-  import {
-    AForm as Form,
-    AFormItem as FormItem,
-    AInput as Input,
-    AInputPassword as InputPassword,
-    AButton as Button,
-    ACheckbox as Checkbox,
-    ATabs as Tabs,
-    ATabPane as TabPane,
-    AIcon as Icon,
-    ARow as Row,
-    ACol as Col,
-  } from 'ant-design-vue';
-
-  // 注册组件
-  const components = {
-    Form,
-    FormItem,
-    Input,
-    InputPassword,
-    Button,
-    Checkbox,
-    Tabs,
-    TabPane,
-    Icon,
-    Row,
-    Col,
-  };
-
   // 路由实例
   const router = useRouter();
 
@@ -358,7 +341,6 @@
       // 更新store中的用户状态
       store.setLoggedIn(true, {
         name: '手机用户',
-        phone: phoneLoginForm.phone,
         avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=phone',
         permissions: ['user'],
       });

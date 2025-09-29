@@ -23,7 +23,12 @@ import Spin from 'ant-design-vue/es/spin';
 import Pagination from 'ant-design-vue/es/pagination';
 import Avatar from 'ant-design-vue/es/avatar';
 import Tabs from 'ant-design-vue/es/tabs';
+import Checkbox from 'ant-design-vue/es/checkbox';
+import Row from 'ant-design-vue/es/grid/row';
+import Col from 'ant-design-vue/es/grid/col';
 import { InputPassword, Textarea } from 'ant-design-vue/es/input';
+import { FormItem } from 'ant-design-vue/es/form';
+import { TabPane } from 'ant-design-vue/es/tabs';
 
 // 同步导入图标组件
 import {
@@ -31,6 +36,13 @@ import {
   HomeOutlined,
   InfoCircleOutlined,
   UserOutlined,
+  LockOutlined,
+  MobileOutlined,
+  VerifiedOutlined,
+  WechatOutlined,
+  DingtalkOutlined,
+  GithubOutlined,
+  CodeSandboxOutlined,
   LogoutOutlined,
   SettingOutlined,
   MenuFoldOutlined,
@@ -47,7 +59,6 @@ import {
   ArrowUpOutlined,
   ArrowDownOutlined,
 } from '@ant-design/icons-vue';
-
 // 定义全局共享状态类，用于管理组件
 class GlobalShareState {
   private components: Record<string, Component> = {};
@@ -122,11 +133,16 @@ export type ComponentType =
   | 'Empty'
   | 'Dropdown'
   | 'Form'
+  | 'FormItem'
+  | 'Checkbox'
   | 'Modal'
   | 'Spin'
   | 'Pagination'
   | 'Avatar'
   | 'Tabs'
+  | 'TabPane'
+  | 'Row'
+  | 'Col'
   | 'InputPassword'
   | 'Textarea'
   // 图标组件
@@ -134,6 +150,13 @@ export type ComponentType =
   | 'HomeOutlined'
   | 'InfoCircleOutlined'
   | 'UserOutlined'
+  | 'LockOutlined'
+  | 'MobileOutlined'
+  | 'VerifiedOutlined'
+  | 'WechatOutlined'
+  | 'DingtalkOutlined'
+  | 'GithubOutlined'
+  | 'CodeSandboxOutlined'
   | 'LogoutOutlined'
   | 'SettingOutlined'
   | 'MenuFoldOutlined'
@@ -180,11 +203,16 @@ export async function initComponentAdapter() {
     Empty,
     Dropdown,
     Form,
+    FormItem,
+    Checkbox,
     Modal,
     Spin,
     Pagination,
     Avatar,
     Tabs,
+    TabPane,
+    Row,
+    Col,
     InputPassword: withDefaultPlaceholder(InputPassword, 'input'),
     Textarea: withDefaultPlaceholder(Textarea, 'input'),
 
@@ -193,6 +221,13 @@ export async function initComponentAdapter() {
     HomeOutlined,
     InfoCircleOutlined,
     UserOutlined,
+    LockOutlined,
+    MobileOutlined,
+    VerifiedOutlined,
+    WechatOutlined,
+    DingtalkOutlined,
+    GithubOutlined,
+    CodeSandboxOutlined,
     LogoutOutlined,
     SettingOutlined,
     MenuFoldOutlined,
