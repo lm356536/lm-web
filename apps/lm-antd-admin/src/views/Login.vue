@@ -111,7 +111,7 @@
               size="large"
             >
               <template #prefix>
-                <VerifiedOutlined />
+                <CheckCircleOutlined />
               </template>
             </a-input>
           </a-col>
@@ -371,9 +371,6 @@
 
       // 开始倒计时
       startCountDown();
-
-      // 提示用户验证码已发送
-      console.log(`验证码已发送到 ${phoneLoginForm.phone}`);
     } catch (error) {
       loginError.value = '发送验证码失败，请稍后重试';
     }
@@ -402,7 +399,6 @@
   // 刷新二维码
   const refreshQrcode = () => {
     // 这里应该是实际的刷新二维码逻辑
-    console.log('刷新二维码');
     // 可以添加一个随机参数来模拟刷新
   };
 
@@ -432,7 +428,6 @@
   /* 默认登录信息提示 */
   .default-credentials {
     margin-bottom: 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     border-radius: 8px;
     overflow: hidden;
   }
@@ -473,7 +468,7 @@
 
   /* 表单样式增强 */
   .ant-form-item-label > label {
-    color: #1a1a1a;
+    color: #000000;
     font-weight: 500;
     font-size: 14px;
     margin-bottom: 8px;
@@ -484,23 +479,17 @@
     border-radius: 8px;
     border: 1px solid #d9d9d9;
     transition: all 0.3s ease;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
   }
 
   .ant-input:hover,
   .ant-input-password:hover {
     border-color: #40a9ff;
-    box-shadow:
-      inset 0 1px 2px rgba(0, 0, 0, 0.05),
-      0 0 0 2px rgba(24, 144, 255, 0.2);
   }
 
   .ant-input:focus,
   .ant-input-password:focus {
     border-color: #1890ff;
-    box-shadow:
-      inset 0 1px 2px rgba(0, 0, 0, 0.05),
-      0 0 0 2px rgba(24, 144, 255, 0.2);
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
   }
 
   /* 表单选项区域 */
@@ -541,21 +530,17 @@
     font-size: 16px;
     font-weight: 600;
     border-radius: 8px;
-    background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+    background-color: #1890ff;
     border: none;
-    box-shadow: 0 4px 12px rgba(24, 144, 255, 0.4);
     transition: all 0.3s ease;
   }
 
   .login-button:hover:not(:disabled) {
-    background: linear-gradient(135deg, #40a9ff 0%, #1890ff 100%);
-    box-shadow: 0 6px 16px rgba(24, 144, 255, 0.5);
-    transform: translateY(-1px);
+    background-color: #40a9ff;
   }
 
   .login-button:active:not(:disabled) {
-    transform: translateY(0);
-    box-shadow: 0 3px 8px rgba(24, 144, 255, 0.4);
+    background-color: #096dd9;
   }
 
   /* 登录错误信息 */
@@ -568,7 +553,6 @@
     color: #ff4d4f;
     text-align: center;
     font-size: 14px;
-    box-shadow: 0 2px 6px rgba(255, 77, 79, 0.1);
   }
 
   /* 二维码登录样式 */
@@ -593,13 +577,7 @@
     border: 1px solid #f0f0f0;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     background: white;
-    transition: box-shadow 0.3s ease;
-  }
-
-  .qrcode-placeholder:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   }
 
   .qrcode-image {
@@ -612,7 +590,7 @@
   .qrcode-hint {
     margin: 0;
     font-size: 14px;
-    color: #4d4d4d;
+    color: #000000;
     font-weight: 500;
     text-align: center;
   }
@@ -624,8 +602,7 @@
   }
 
   .refresh-qrcode:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    background-color: #f5f5f5;
   }
 
   /* 其他登录方式 */
@@ -662,7 +639,7 @@
   .divider span {
     padding: 0 16px;
     background-color: #fff;
-    color: #4d4d4d;
+    color: #000000;
     font-size: 14px;
     font-weight: 500;
   }
@@ -687,7 +664,7 @@
 
   .login-icon {
     font-size: 24px;
-    color: #4d4d4d;
+    color: #000000;
     transition: color 0.3s ease;
   }
 
@@ -701,7 +678,7 @@
     margin-top: 20px;
     text-align: center;
     font-size: 14px;
-    color: #4d4d4d;
+    color: #000000;
     font-weight: 500;
   }
 

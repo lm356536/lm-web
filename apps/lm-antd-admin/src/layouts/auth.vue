@@ -123,11 +123,11 @@
     z-index: 1;
     color: white;
     text-align: center;
-    max-width: 400px;
+    max-width: 600px;
   }
 
   .left-title {
-    font-size: 36px;
+    font-size: 42px;
     font-weight: 700;
     margin: 0 0 16px;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -135,16 +135,16 @@
   }
 
   .left-description {
-    font-size: 18px;
+    font-size: 16px;
     opacity: 0.95;
     line-height: 1.6;
-    color: #f0f0f0;
+    color: #121111;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   }
 
   /* 右侧登录表单区域 */
   .auth-right-section {
-    flex: 10;
+    flex: 9;
     min-width: 0;
     max-width: none;
     display: flex;
@@ -158,20 +158,12 @@
 
   .auth-container {
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
     background: #ffffff;
-    border-radius: 12px;
-    padding: 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
     position: relative;
     z-index: 10;
     opacity: 1;
     visibility: visible;
-  }
-
-  .auth-container:hover {
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
   }
 
   .auth-header {
