@@ -100,7 +100,7 @@
   /* Logo文本样式 */
   .logo-text {
     color: #ffffff;
-    font-size: 24px;
+    font-size: 36px;
     margin: 0;
     font-weight: 600;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);

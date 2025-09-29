@@ -11,15 +11,6 @@
       />
     </div>
 
-    <!-- 登录方式切换标签 -->
-    <div class="login-tabs">
-      <a-tabs v-model:activeKey="activeLoginTab" type="card" class="login-tabs-container">
-        <a-tab-pane key="account" tab="账号密码登录" />
-        <a-tab-pane key="phone" tab="手机号登录" />
-        <a-tab-pane key="qrcode" tab="扫码登录" />
-      </a-tabs>
-    </div>
-
     <!-- 账号密码登录表单 -->
     <a-form
       v-if="activeLoginTab === 'account'"
@@ -73,99 +64,137 @@
         </a-button>
       </a-form-item>
 
+      <!-- 切换登录方式按钮 -->
+      <div class="alternative-login-methods">
+        <a-button
+          type="default"
+          class="switch-login-button"
+          block
+          size="large"
+          @click="switchToPhoneLogin"
+        >
+          手机号登录
+        </a-button>
+        <a-button
+          type="default"
+          class="switch-login-button"
+          block
+          size="large"
+          @click="switchToQrcodeLogin"
+        >
+          扫码登录
+        </a-button>
+      </div>
+
       <div v-if="loginError" class="login-error">
         {{ loginError }}
       </div>
     </a-form>
 
     <!-- 手机号登录表单 -->
-    <a-form
-      v-if="activeLoginTab === 'phone'"
-      ref="phoneFormRef"
-      :model="phoneLoginForm"
-      :rules="phoneLoginRules"
-      layout="vertical"
-      @finish="handlePhoneLogin"
-    >
-      <a-form-item name="phone" label="手机号">
-        <a-input
-          v-model:value="phoneLoginForm.phone"
-          placeholder="请输入手机号"
-          allow-clear
-          size="large"
-        >
-          <template #prefix>
-            <MobileOutlined />
-          </template>
-        </a-input>
-      </a-form-item>
-
-      <a-form-item name="verificationCode" label="验证码">
-        <a-row :gutter="12">
-          <a-col :span="16">
-            <!-- 修复点1: 将错误的 VerifiedOutlined 替换为 CheckCircleOutlined -->
-            <a-input
-              v-model:value="phoneLoginForm.verificationCode"
-              placeholder="请输入验证码"
-              allow-clear
-              size="large"
-            >
-              <template #prefix>
-                <CheckCircleOutlined />
-              </template>
-            </a-input>
-          </a-col>
-          <a-col :span="8">
-            <a-button
-              :disabled="countDown > 0"
-              type="default"
-              size="large"
-              block
-              @click="sendVerificationCode"
-            >
-              {{ countDown > 0 ? `${countDown}秒后重发` : '获取验证码' }}
-            </a-button>
-          </a-col>
-        </a-row>
-      </a-form-item>
-
-      <a-form-item>
-        <a-button
-          type="primary"
-          html-type="submit"
-          class="login-button"
-          :loading="loginLoading"
-          block
-          size="large"
-        >
-          登录
+    <div v-if="activeLoginTab === 'phone'" class="phone-login-container">
+      <!-- 返回按钮 -->
+      <div class="back-button">
+        <a-button type="text" @click="backToAccountLogin" class="back-btn">
+          <LeftOutlined /> 返回账号登录
         </a-button>
-      </a-form-item>
-
-      <div v-if="loginError" class="login-error">
-        {{ loginError }}
       </div>
-    </a-form>
+
+      <a-form
+        ref="phoneFormRef"
+        :model="phoneLoginForm"
+        :rules="phoneLoginRules"
+        layout="vertical"
+        @finish="handlePhoneLogin"
+      >
+        <a-form-item name="phone" label="手机号">
+          <a-input
+            v-model:value="phoneLoginForm.phone"
+            placeholder="请输入手机号"
+            allow-clear
+            size="large"
+          >
+            <template #prefix>
+              <MobileOutlined />
+            </template>
+          </a-input>
+        </a-form-item>
+
+        <a-form-item name="verificationCode" label="验证码">
+          <a-row :gutter="12">
+            <a-col :span="16">
+              <a-input
+                v-model:value="phoneLoginForm.verificationCode"
+                placeholder="请输入验证码"
+                allow-clear
+                size="large"
+              >
+                <template #prefix>
+                  <CheckCircleOutlined />
+                </template>
+              </a-input>
+            </a-col>
+            <a-col :span="8">
+              <a-button
+                :disabled="countDown > 0"
+                type="default"
+                size="large"
+                block
+                @click="sendVerificationCode"
+              >
+                {{ countDown > 0 ? `${countDown}秒后重发` : '获取验证码' }}
+              </a-button>
+            </a-col>
+          </a-row>
+        </a-form-item>
+
+        <a-form-item>
+          <a-button
+            type="primary"
+            html-type="submit"
+            class="login-button"
+            :loading="loginLoading"
+            block
+            size="large"
+          >
+            登录
+          </a-button>
+        </a-form-item>
+
+        <div v-if="loginError" class="login-error">
+          {{ loginError }}
+        </div>
+      </a-form>
+    </div>
 
     <!-- 扫码登录 -->
-    <div v-if="activeLoginTab === 'qrcode'" class="qrcode-login">
-      <div class="qrcode-container">
-        <div class="qrcode-placeholder">
-          <img
-            src="https://api.dicebear.com/7.x/avataaars/svg?seed=qrcode"
-            alt="登录二维码"
-            class="qrcode-image"
-          />
-          <p class="qrcode-hint">请使用企业微信扫描二维码登录</p>
-        </div>
-        <a-button type="default" size="large" block class="refresh-qrcode" @click="refreshQrcode">
-          刷新二维码
+    <div v-if="activeLoginTab === 'qrcode'" class="qrcode-login-container">
+      <!-- 返回按钮 -->
+      <div class="back-button">
+        <a-button type="text" @click="backToAccountLogin" class="back-btn">
+          <LeftOutlined /> 返回账号登录
         </a-button>
+      </div>
+
+      <div class="qrcode-login">
+        <div class="qrcode-container">
+          <div class="qrcode-placeholder">
+            <img
+              src="https://api.dicebear.com/7.x/avataaars/svg?seed=qrcode"
+              alt="登录二维码"
+              class="qrcode-image"
+            />
+            <p class="qrcode-hint">请使用企业微信扫描二维码登录</p>
+          </div>
+          <a-button type="default" size="large" block class="refresh-qrcode" @click="refreshQrcode">
+            刷新二维码
+          </a-button>
+        </div>
       </div>
     </div>
 
-    <!-- 其他登录方式 -->
-    <div class="other-login-methods">
+    <!-- 其他登录方式 - 只在账号密码登录页面显示 -->
+    <div v-if="activeLoginTab === 'account'" class="social-login-methods">
       <div class="divider">
         <span>其他登录方式</span>
       </div>
@@ -185,7 +214,9 @@
       </div>
     </div>
 
-    <div class="register-link">还没有账号？<a href="#">立即注册</a></div>
+    <div v-if="activeLoginTab === 'account'" class="register-link">
+      还没有账号？<a href="#">立即注册</a>
+    </div>
   </div>
 </template>
 
@@ -194,6 +225,17 @@
   import { useRouter } from 'vue-router';
   import type { FormInstance } from 'ant-design-vue';
   import { store } from '@/store'; // 引入状态管理
+  import {
+    UserOutlined,
+    LockOutlined,
+    MobileOutlined,
+    CheckCircleOutlined,
+    WechatOutlined,
+    SmileOutlined,
+    GithubOutlined,
+    InfoCircleOutlined,
+    LeftOutlined,
+  } from '@ant-design/icons-vue';
   // 路由实例
   const router = useRouter();
 
@@ -411,6 +453,19 @@
     }
   });
 
+  // 切换登录方式
+  const switchToPhoneLogin = () => {
+    activeLoginTab.value = 'phone';
+  };
+
+  const switchToQrcodeLogin = () => {
+    activeLoginTab.value = 'qrcode';
+  };
+
+  const backToAccountLogin = () => {
+    activeLoginTab.value = 'account';
+  };
+
   // 组件卸载时清理定时器
   onUnmounted(() => {
     if (timer) {
@@ -430,40 +485,6 @@
     margin-bottom: 24px;
     border-radius: 8px;
     overflow: hidden;
-  }
-
-  /* 登录标签切换 */
-  .login-tabs {
-    margin-bottom: 24px;
-  }
-
-  .login-tabs-container {
-    border-bottom: none;
-  }
-
-  .login-tabs-container .ant-tabs-nav {
-    margin-bottom: 0;
-  }
-
-  .login-tabs-container .ant-tabs-tab {
-    color: #4d4d4d;
-    font-weight: 500;
-    transition: all 0.3s ease;
-  }
-
-  .login-tabs-container .ant-tabs-tab:hover {
-    color: #1890ff;
-  }
-
-  .login-tabs-container .ant-tabs-tab.ant-tabs-tab-active {
-    color: #1890ff;
-    font-weight: 600;
-  }
-
-  .login-tabs-container .ant-tabs-ink-bar {
-    background-color: #1890ff;
-    height: 3px;
-    border-radius: 1.5px;
   }
 
   /* 表单样式增强 */
@@ -543,6 +564,56 @@
     background-color: #096dd9;
   }
 
+  /* 切换登录方式按钮 */
+  .alternative-login-methods {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .switch-login-button {
+    height: 44px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .switch-login-button:hover:not(:disabled) {
+    border-color: #1890ff;
+    color: #1890ff;
+  }
+
+  /* 返回按钮 */
+  .back-button {
+    margin-bottom: 20px;
+  }
+
+  .back-btn {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1890ff;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.3s ease;
+  }
+
+  .back-btn:hover {
+    color: #40a9ff;
+  }
+
+  /* 手机号登录容器 */
+  .phone-login-container {
+    width: 100%;
+  }
+
+  /* 扫码登录容器 */
+  .qrcode-login-container {
+    width: 100%;
+  }
+
   /* 登录错误信息 */
   .login-error {
     margin-top: 16px;
@@ -606,7 +677,7 @@
   }
 
   /* 其他登录方式 */
-  .other-login-methods {
+  .social-login-methods {
     margin-top: 24px;
     padding-top: 20px;
     border-top: 1px solid #f0f0f0;
@@ -708,6 +779,16 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 12px;
+    }
+
+    .alternative-login-methods {
+      gap: 8px;
+    }
+
+    .switch-login-button,
+    .login-button {
+      height: 40px;
+      font-size: 14px;
     }
 
     .login-icons {
