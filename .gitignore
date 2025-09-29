@@ -50,8 +50,8 @@ vite.config.ts.*
 *.sw?
 .history
 .cursor
-.trae
+.trae/*
 demo
-
+project_rules.md
 project-documentation
 node_modules
