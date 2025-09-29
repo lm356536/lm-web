@@ -3,7 +3,7 @@
  * 可用于各种表单、模态框等组件使用
  */
 
-import type { App, Component, RecordPropsDefinition, ComponentOptionsMixin, ExtractPropTypes, SetupContext } from 'vue';
+import type { App, Component, SetupContext } from 'vue';
 import type { Recordable } from '@lm/types';
 import { defineComponent, h, ref } from 'vue';
 import { notification } from 'ant-design-vue';
@@ -81,7 +81,7 @@ export const globalShareState = new GlobalShareState();
 const withDefaultPlaceholder = <T extends Component>(
   component: T,
   type: 'input' | 'select',
-  componentProps: Recordable<any> = {},
+  componentProps: Recordable<unknown> = {},
 ) => {
   return defineComponent({
     name: component.name,
@@ -210,11 +210,17 @@ export async function initComponentAdapter() {
     ArrowDownOutlined,
 
     // 自定义按钮类型
-    DefaultButton: (props: Record<string, unknown>, { attrs, slots }: { attrs: Record<string, unknown>, slots: Record<string, unknown> }) => {
+    DefaultButton: (
+      props: Record<string, unknown>,
+      { attrs, slots }: { attrs: Record<string, unknown>; slots: Record<string, unknown> },
+    ) => {
       return h(Button, { ...props, ...attrs, type: 'default' }, slots);
     },
 
-    PrimaryButton: (props: Record<string, unknown>, { attrs, slots }: { attrs: Record<string, unknown>, slots: Record<string, unknown> }) => {
+    PrimaryButton: (
+      props: Record<string, unknown>,
+      { attrs, slots }: { attrs: Record<string, unknown>; slots: Record<string, unknown> },
+    ) => {
       return h(Button, { ...props, ...attrs, type: 'primary' }, slots);
     },
   };

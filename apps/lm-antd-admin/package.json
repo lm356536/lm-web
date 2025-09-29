@@ -12,6 +12,7 @@
     "@ant-design/icons-vue": "^7.0.1",
     "@lm/components": "workspace:*",
     "@lm/utils": "workspace:*",
+    "@lm/types": "workspace:*",
     "ant-design-vue": "^4.0.0",
     "axios": "catalog:",
     "vue": "^3.4.15",
