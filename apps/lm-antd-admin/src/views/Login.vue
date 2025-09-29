@@ -93,13 +93,6 @@
 
     <!-- 手机号登录表单 -->
     <div v-if="activeLoginTab === 'phone'" class="phone-login-container">
-      <!-- 返回按钮 -->
-      <div class="back-button">
-        <a-button type="text" @click="backToAccountLogin" class="back-btn">
-          <LeftOutlined /> 返回账号登录
-        </a-button>
-      </div>
-
       <a-form
         ref="phoneFormRef"
         :model="phoneLoginForm"
@@ -161,6 +154,13 @@
           </a-button>
         </a-form-item>
 
+        <!-- 返回按钮 - 移到登录按钮下方 -->
+        <div class="back-button">
+          <a-button type="text" @click="backToAccountLogin" class="back-btn">
+            <LeftOutlined /> 返回账号登录
+          </a-button>
+        </div>
+
         <div v-if="loginError" class="login-error">
           {{ loginError }}
         </div>
@@ -169,13 +169,6 @@
 
     <!-- 扫码登录 -->
     <div v-if="activeLoginTab === 'qrcode'" class="qrcode-login-container">
-      <!-- 返回按钮 -->
-      <div class="back-button">
-        <a-button type="text" @click="backToAccountLogin" class="back-btn">
-          <LeftOutlined /> 返回账号登录
-        </a-button>
-      </div>
-
       <div class="qrcode-login">
         <div class="qrcode-container">
           <div class="qrcode-placeholder">
@@ -188,6 +181,13 @@
           </div>
           <a-button type="default" size="large" block class="refresh-qrcode" @click="refreshQrcode">
             刷新二维码
+          </a-button>
+        </div>
+
+        <!-- 返回按钮 - 移到二维码下方 -->
+        <div class="back-button" style="margin-top: 16px">
+          <a-button type="text" @click="backToAccountLogin" class="back-btn">
+            <LeftOutlined /> 返回账号登录
           </a-button>
         </div>
       </div>
