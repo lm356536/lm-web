@@ -4,7 +4,8 @@
     <div class="auth-left-section">
       <div class="logo-container">
         <div class="logo">
-          <h1>LM Web</h1>
+          <img src="../asserts/images/logo.jpeg" alt="LM Web Logo" class="logo-image" />
+          <h1 class="logo-text">LM Web</h1>
         </div>
       </div>
       <div class="left-content">
@@ -81,7 +82,23 @@
     z-index: 2;
   }
 
-  .logo h1 {
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* Logo图片样式 */
+  .logo-image {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Logo文本样式 */
+  .logo-text {
     color: #ffffff;
     font-size: 24px;
     margin: 0;
