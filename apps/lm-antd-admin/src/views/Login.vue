@@ -568,11 +568,11 @@
   .alternative-login-methods {
     margin-top: 16px;
     display: flex;
-    flex-direction: column;
     gap: 12px;
   }
 
   .switch-login-button {
+    flex: 1;
     height: 44px;
     font-size: 16px;
     font-weight: 500;
