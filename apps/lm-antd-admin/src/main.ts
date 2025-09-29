@@ -9,8 +9,9 @@ async function main() {
     // 应用启动前的准备工作
     await AppLifecycle.beforeMount();
 
-    // 初始化应用实例
-    const { app, isReady } = await bootstrapApp(() => import('./App.vue'));
+    // 初始化应用实例 - 先解析App组件再传递
+    const appComponentModule = await import('./App.vue');
+    const { app, isReady } = await bootstrapApp(appComponentModule.default);
 
     if (isReady) {
       // 挂载应用到DOM

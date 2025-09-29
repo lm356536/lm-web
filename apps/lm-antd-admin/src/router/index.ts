@@ -1,4 +1,3 @@
-import { defineAsyncComponent } from 'vue';
 import {
   createRouter,
   createWebHistory,
@@ -21,7 +20,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'Home',
-        component: defineAsyncComponent(() => import('@/views/Home.vue')),
+        component: () => import('@/views/Home.vue'),
         meta: {
           title: '首页',
           requiresAuth: false,
@@ -30,7 +29,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'about',
         name: 'About',
-        component: defineAsyncComponent(() => import('@/views/About.vue')),
+        component: () => import('@/views/About.vue'),
         meta: {
           title: '关于我们',
           requiresAuth: false,
@@ -42,7 +41,7 @@ const routes: RouteRecordRaw[] = [
     // 404页面
     path: '/404',
     name: 'NotFound',
-    component: defineAsyncComponent(() => import('@/views/NotFound.vue')),
+    component: () => import('@/views/NotFound.vue'),
     meta: {
       title: '页面不存在',
     },

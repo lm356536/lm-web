@@ -1,5 +1,3 @@
-// 异步导入布局组件
-const BasicLayout = () => import('./basic.vue');
-const AuthLayout = () => import('./auth.vue');
-
-export { BasicLayout, AuthLayout };
+// 同步导入布局组件
+export { default as BasicLayout } from './basic.vue';
+export { default as AuthLayout } from './auth.vue';

@@ -11,7 +11,7 @@ export default defineConfig({
       insertTypesEntry: true,
       cleanVueFileName: true,
       copyDtsFiles: true,
-      include: ['src/index.ts', 'src/HelloWorld/**/*.vue'],
+      include: ['src/index.ts', 'src/HelloWorld/**/*.vue', 'src/LmInput/**/*.vue'],
     }),
   ],
   build: {
@@ -19,6 +19,7 @@ export default defineConfig({
       entry: {
         index: resolve(__dirname, 'src/index.ts'),
         'HelloWorld/HelloWorld': resolve(__dirname, 'src/HelloWorld/HelloWorld.vue'),
+        'LmInput/LmInput': resolve(__dirname, 'src/LmInput/LmInput.vue'),
       },
       name: '@lm/components',
       formats: ['es'],

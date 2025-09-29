@@ -1,24 +1,15 @@
 <template>
-  <!-- 根据路由元信息选择不同的布局 -->
-  <component :is="currentLayout">
-    <!-- 路由视图会被渲染在布局组件中 -->
-  </component>
+  <!-- 直接使用路由视图，布局组件在路由配置中定义 -->
+  <router-view />
 </template>
 
 <script setup lang="ts">
-  import { computed, watch, onMounted } from 'vue';
+  import { watch, onMounted } from 'vue';
   import { useRoute } from 'vue-router';
-  import { BasicLayout, AuthLayout } from './layouts';
   import { useI18n } from './locales';
 
   const route = useRoute();
   const { t } = useI18n();
-
-  // 根据路由的元信息决定使用哪个布局
-  const currentLayout = computed(() => {
-    // 如果路由配置了auth布局，则使用AuthLayout，否则使用BasicLayout
-    return route.meta.layout === 'auth' ? AuthLayout : BasicLayout;
-  });
 
   // 监听路由变化，更新页面标题
   watch(
